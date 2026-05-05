@@ -478,7 +478,7 @@ export default function Home() {
         <div className="faq-inner">
   <div className="faq-left fade-up">
     <h2>Questions worth asking.</h2>
-    <p>If you don&apos;t see your question here...</p>
+    <p>If you don&apos;t see your question here, email us at hello@calar.me and we&apos;ll answer honestly.</p>
   </div>
   <div className="faq-list fade-up d1">
             {faqs.map(({ q, a }, i) => (
