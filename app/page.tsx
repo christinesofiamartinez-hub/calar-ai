@@ -514,7 +514,7 @@ export default function Home() {
             { heading: "Product", links: [["#product","How it works"],["#product","Integrations"],["/demo","Demo"],["#contact","Pricing"]] },
             { heading: "Use cases", links: [["#contact","Agencies"],["#contact","SaaS"],["#contact","Consultancies"],["#contact","Startups"]] },
             { heading: "Resources", links: [["#contact","Blog"],["#contact","Sample briefing"],["#contact","Case studies"]] },
-            { heading: "Company", links: [["#contact","About"],["mailto:hello@calar.me","Contact"],["#contact","Privacy"],["#contact","Terms"]] },
+            { heading: "Company", links: [["/about","About"],["mailto:hello@calar.me","Contact"],["#contact","Privacy"],["#contact","Terms"]] },
           ].map(({ heading, links }) => (
             <div key={heading} className="footer-col">
               <h4>{heading}</h4>
