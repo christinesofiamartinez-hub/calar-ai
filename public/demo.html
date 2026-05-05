@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calar — Demo</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font: -apple-system, 'system-ui', BlinkMacSystemFont, sans-serif;
+      --green: #22C55E;
+      --red: #EF4444;
+      --yellow: #F59E0B;
+      --bg: #0A0A0A;
+      --surface: #111111;
+      --surface2: #181818;
+      --surface3: #202020;
+      --border: #1F1F1F;
+      --border2: #2A2A2A;
+      --text: #FAFAFA;
+      --text2: #888888;
+      --text3: #444444;
+      --radius: 8px;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #F4F4F5;
+        --surface: #FFFFFF;
+        --surface2: #F4F4F5;
+        --surface3: #ECECED;
+        --border: #E4E4E7;
+        --border2: #D1D1D6;
+        --text: #09090B;
+        --text2: #52525B;
+        --text3: #A1A1AA;
+        --green: #16A34A;
+        --red: #DC2626;
+        --yellow: #D97706;
+      }
+    }
+
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeInRight { from{opacity:0;transform:translateX(14px)} to{opacity:1;transform:translateX(0)} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+    @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-4px)} }
+    @keyframes slideIn { from{opacity:0;transform:translateY(100%)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── SCREENS ── */
+    .screen { display: none; position: fixed; inset: 0; flex-direction: column; }
+    .screen.active { display: flex; }
+
+    /* ── SELECTION SCREEN ── */
+    #sel-screen {
+      background: var(--bg);
+      align-items: center; justify-content: center;
+      padding: 40px 24px;
+    }
+
+    #sel-screen::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 64px 64px; pointer-events: none;
+    }
+
+    .sel-inner { position: relative; z-index: 1; width: 100%; max-width: 860px; }
+
+    .sel-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 52px; }
+    .sel-brand { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+    .sel-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border2); border-radius: 100px; padding: 4px 12px; font-size: 11px; color: var(--text2); }
+    .sel-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: blink 2s infinite; }
+
+    .sel-headline { font-size: clamp(28px,5vw,48px); font-weight: 800; letter-spacing: -2px; line-height: 1; color: var(--text); margin-bottom: 10px; text-align: center; animation: fadeIn .5s ease both; }
+    .sel-sub { font-size: 14px; color: var(--text2); text-align: center; margin-bottom: 44px; animation: fadeIn .5s .08s ease both; }
+    .sel-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 14px; text-align: center; animation: fadeIn .5s .12s ease both; }
+
+    .sel-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; animation: fadeIn .5s .16s ease both; }
+
+    .sel-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; cursor: pointer; transition: border-color .2s, background .2s, transform .2s; }
+    .sel-card:hover { border-color: var(--border2); background: var(--surface2); transform: translateY(-2px); }
+
+    .sel-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+    .sel-card-name { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+    .sel-card-type { font-size: 11px; color: var(--text3); margin-top: 2px; }
+    .sel-card-arrow { font-size: 14px; color: var(--text3); transition: transform .2s; }
+    .sel-card:hover .sel-card-arrow { transform: translateX(3px); color: var(--text2); }
+
+    .sel-stats { display: flex; gap: 14px; margin-bottom: 12px; }
+    .sel-stat-val { font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; }
+    .sel-stat-label { font-size: 10px; color: var(--text3); margin-top: 1px; }
+
+    .sel-tools { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 10px; }
+    .sel-tool { font-size: 10px; color: var(--text3); background: var(--surface2); border: 1px solid var(--border); border-radius: 4px; padding: 2px 6px; }
+
+    .sel-situation { padding-top: 10px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text3); line-height: 1.5; }
+    .sel-situation .warn { color: var(--yellow); }
+    .sel-situation .danger { color: var(--red); }
+
+    /* ── LOADING ── */
+    #load-screen { background: var(--bg); align-items: center; justify-content: center; }
+    .load-company { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
+    .load-bar-wrap { width: 180px; height: 1px; background: var(--border); border-radius: 1px; overflow: hidden; }
+    .load-bar { height: 100%; background: var(--text); border-radius: 1px; width: 0%; transition: width .04s linear; }
+    .load-status { font-size: 11px; color: var(--text3); margin-top: 10px; }
+
+    /* ── MAIN APP ── */
+    #app-screen { background: var(--bg); }
+
+    /* ── APP NAV ── */
+    .app-nav {
+      height: 48px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; padding: 0 20px; gap: 12px;
+      flex-shrink: 0; background: rgba(10,10,10,0.9); backdrop-filter: blur(12px);
+      position: relative; z-index: 10;
+    }
+
+    @media (prefers-color-scheme: light) {
+      .app-nav { background: rgba(244,244,245,0.92); }
+    }
+
+    .app-nav-brand { font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -0.3px; }
+    .app-nav-divider { width: 1px; height: 14px; background: var(--border2); }
+
+    .app-nav-company { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--text2); cursor: pointer; }
+    .app-nav-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); animation: blink 2s infinite; }
+
+    /* Mode switcher */
+    .mode-switcher { display: flex; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 2px; gap: 1px; }
+    .mode-btn { font-family: var(--font); font-size: 11px; font-weight: 500; color: var(--text3); background: none; border: none; border-radius: 4px; padding: 4px 10px; cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: 5px; }
+    .mode-btn:hover { color: var(--text2); }
+    .mode-btn.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+
+    .mode-icon { width: 12px; height: 12px; opacity: 0.6; }
+    .mode-btn.active .mode-icon { opacity: 1; }
+
+    .app-nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .app-nav-date { font-size: 11px; color: var(--text3); }
+    .app-nav-live { display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--green); font-weight: 500; }
+    .app-nav-live-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--green); animation: blink 2s infinite; }
+    .app-nav-back { font-family: var(--font); font-size: 11px; color: var(--text3); background: none; border: 1px solid var(--border); border-radius: 5px; padding: 4px 10px; cursor: pointer; transition: color .15s; }
+    .app-nav-back:hover { color: var(--text2); }
+    .app-nav-avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--text2); }
+
+    /* ── MODE PANELS ── */
+    .mode-panel { display: none; flex: 1; overflow: hidden; }
+    .mode-panel.active { display: flex; flex-direction: column; }
+
+    /* ══════════════════════════════════
+       MODE 1: OVERVIEW (Newspaper)
+    ══════════════════════════════════ */
+    #mode-overview { overflow-y: auto; }
+    #mode-overview::-webkit-scrollbar { width: 3px; }
+    #mode-overview::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+    .overview-inner { max-width: 1200px; margin: 0 auto; padding: 16px 20px 40px; }
+
+    .ov-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; animation: fadeUp .35s ease both; }
+    .ov-header-left { }
+    .ov-eyebrow { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 2px; }
+    .ov-title { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; color: var(--text); }
+
+    .ov-health { display: flex; align-items: center; gap: 8px; }
+    .health-ring-wrap { position: relative; width: 40px; height: 40px; }
+    .health-ring-wrap svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+    .hring-bg { fill: none; stroke: var(--border2); stroke-width: 2.5; }
+    .hring-fill { fill: none; stroke: var(--yellow); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 107; stroke-dashoffset: 29; }
+    .hring-num { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; color: var(--text); }
+    .ov-health-text-label { font-size: 10px; color: var(--text3); }
+    .ov-health-text-status { font-size: 11px; font-weight: 600; color: var(--yellow); }
+
+    /* Newspaper grid */
+    .newspaper { display: grid; grid-template-columns: repeat(12,1fr); gap: 8px; }
+
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color .15s; animation: fadeUp .4s ease both; }
+    .card:hover { border-color: var(--border2); }
+    .card-header { padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+    .card-title { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); }
+    .card-action { font-size: 11px; color: var(--text3); cursor: pointer; transition: color .15s; }
+    .card-action:hover { color: var(--text2); }
+    .card-meta { font-size: 10px; color: var(--text3); }
+    .card-body { padding: 14px; }
+
+    .card-alert-banner { grid-column: 1/-1; animation-delay:.04s; border-left: 3px solid var(--red); display: flex; align-items: center; gap: 12px; padding: 11px 16px; }
+    .alert-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); flex-shrink: 0; animation: blink 1.5s infinite; }
+    .alert-text-w { flex: 1; }
+    .alert-ttl { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 1px; }
+    .alert-ttl .r { color: var(--red); }
+    .alert-dsc { font-size: 11px; color: var(--text2); }
+    .alert-acts { display: flex; gap: 5px; flex-shrink: 0; }
+    .alert-btn-p { font-family: var(--font); font-size: 11px; font-weight: 600; color: var(--bg); background: var(--red); border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer; }
+    .alert-btn-s { font-family: var(--font); font-size: 11px; color: var(--text2); background: none; border: 1px solid var(--border2); border-radius: 5px; padding: 5px 10px; cursor: pointer; }
+
+    .card-revenue { grid-column: 1/6; animation-delay:.07s; }
+    .rev-main { display: flex; align-items: baseline; gap: 8px; margin-bottom: 2px; }
+    .rev-num { font-size: 34px; font-weight: 800; letter-spacing: -2px; color: var(--text); line-height: 1; }
+    .rev-trend { font-size: 12px; font-weight: 600; color: var(--green); }
+    .rev-sub { font-size: 11px; color: var(--text3); margin-bottom: 14px; }
+    .spark-svg { width: 100%; height: 56px; }
+    .spark-labels { display: flex; justify-content: space-between; margin-top: 2px; }
+    .spark-lbl { font-size: 9px; color: var(--text3); }
+    .rev-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; margin-top: 10px; }
+    .rev-cell { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 9px 11px; }
+    .rev-cell-lbl { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); margin-bottom: 3px; }
+    .rev-cell-val { font-size: 14px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; }
+    .rev-cell-sub { font-size: 10px; margin-top: 1px; }
+
+    .card-health-b { grid-column: 6/9; animation-delay:.10s; }
+    .hbig { font-size: 44px; font-weight: 800; letter-spacing: -3px; color: var(--text); line-height: 1; margin-bottom: 2px; }
+    .hbig-sub { font-size: 11px; color: var(--text3); margin-bottom: 12px; }
+    .hbar { margin-bottom: 8px; }
+    .hbar-top { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px; }
+    .hbar-name { color: var(--text2); }
+    .hbar-val { font-weight: 600; }
+    .hbar-track { height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+    .hbar-fill { height: 100%; border-radius: 2px; }
+
+    .card-signals { grid-column: 9/13; animation-delay:.13s; }
+    .sig-item { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+    .sig-item:last-child { border-bottom: none; }
+    .sig-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .sig-label { font-size: 12px; color: var(--text2); flex: 1; }
+    .sig-val { font-size: 12px; font-weight: 600; color: var(--text); }
+    .sig-trend { font-size: 10px; font-weight: 600; margin-left: 3px; }
+
+    .card-clients { grid-column: 1/7; animation-delay:.16s; }
+    .cl-row { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+    .cl-row:last-child { border-bottom: none; }
+    .cl-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .cl-name { font-size: 12px; font-weight: 500; color: var(--text); flex: 1; }
+    .cl-mrr { font-size: 11px; color: var(--text2); width: 52px; text-align: right; }
+    .cl-last { font-size: 10px; color: var(--text3); width: 80px; text-align: right; }
+    .cl-badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 4px; width: 58px; text-align: center; }
+
+    .card-pipeline { grid-column: 7/13; animation-delay:.19s; }
+    .pipe-head { display: grid; grid-template-columns: 1fr 50px 78px 60px; gap: 6px; padding-bottom: 6px; border-bottom: 1px solid var(--border); margin-bottom: 2px; }
+    .pipe-head span { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); }
+    .pipe-head span:not(:first-child) { text-align: right; }
+    .deal-row { display: grid; grid-template-columns: 1fr 50px 78px 60px; gap: 6px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--border); }
+    .deal-row:last-child { border-bottom: none; }
+    .deal-name { font-size: 12px; font-weight: 500; color: var(--text); }
+    .deal-co { font-size: 10px; color: var(--text3); }
+    .deal-val { font-size: 12px; font-weight: 700; color: var(--text); text-align: right; }
+    .deal-days { font-size: 10px; color: var(--text3); text-align: right; }
+    .deal-badge { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; text-align: center; }
+
+    .card-team { grid-column: 1/5; animation-delay:.22s; }
+    .tm-row { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+    .tm-row:last-child { border-bottom: none; }
+    .tm-av { width: 24px; height: 24px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: var(--text2); flex-shrink: 0; }
+    .tm-info { flex: 1; }
+    .tm-name { font-size: 12px; font-weight: 500; color: var(--text); }
+    .tm-role { font-size: 10px; color: var(--text3); }
+    .tm-right { display: flex; align-items: center; gap: 5px; }
+    .tm-bar-w { width: 48px; height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+    .tm-bar-f { height: 100%; border-radius: 2px; }
+    .tm-util { font-size: 10px; font-weight: 600; width: 28px; text-align: right; }
+
+    .card-activity { grid-column: 5/10; animation-delay:.25s; }
+    .act-item { display: flex; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+    .act-item:last-child { border-bottom: none; }
+    .act-left { display: flex; flex-direction: column; align-items: center; padding-top: 3px; flex-shrink: 0; }
+    .act-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .act-line { width: 1px; flex: 1; background: var(--border); margin-top: 3px; }
+    .act-item:last-child .act-line { display: none; }
+    .act-text { font-size: 11px; color: var(--text2); line-height: 1.45; margin-bottom: 2px; }
+    .act-text strong { color: var(--text); font-weight: 500; }
+    .act-time { font-size: 10px; color: var(--text3); display: flex; align-items: center; gap: 4px; }
+    .act-tool { font-size: 9px; color: var(--text3); background: var(--surface2); border: 1px solid var(--border); border-radius: 3px; padding: 1px 5px; }
+
+    .card-wsig { grid-column: 10/13; animation-delay:.28s; }
+    .wsig-date { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 9px; }
+    .wsig-para { font-size: 12px; color: var(--text2); line-height: 1.65; margin-bottom: 8px; }
+    .wsig-para strong { color: var(--text); font-weight: 500; }
+    .wsig-para .r { color: var(--red); font-weight: 500; }
+    .wsig-para .g { color: var(--green); font-weight: 500; }
+    .wsig-action { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 9px 11px; font-size: 11px; color: var(--text2); line-height: 1.6; }
+    .wsig-action strong { color: var(--text); font-weight: 500; }
+    .wsig-more { display: flex; align-items: center; justify-content: space-between; margin-top: 9px; font-size: 11px; color: var(--text3); cursor: pointer; }
+    .wsig-more:hover { color: var(--text2); }
+
+    /* ══════════════════════════════════
+       MODE 2: WORKSPACE (3-column)
+    ══════════════════════════════════ */
+    #mode-workspace { flex-direction: row; overflow: hidden; }
+
+    .ws-sidebar { width: 200px; border-right: 1px solid var(--border); background: var(--bg); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; }
+    .ws-sidebar::-webkit-scrollbar { display: none; }
+
+    .ws-sidebar-section { padding: 10px 8px 4px; }
+    .ws-sidebar-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); padding: 0 4px; margin-bottom: 2px; }
+
+    .ws-nav-item { display: flex; align-items: center; gap: 7px; padding: 5px 6px; border-radius: 5px; cursor: pointer; color: var(--text2); font-size: 12px; transition: background .1s, color .1s; }
+    .ws-nav-item:hover { background: var(--surface2); color: var(--text); }
+    .ws-nav-item.active { background: var(--surface2); color: var(--text); }
+    .ws-nav-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; opacity: 0.6; }
+    .ws-nav-item.active .ws-nav-dot { opacity: 1; }
+    .ws-nav-badge { margin-left: auto; font-size: 9px; font-weight: 600; color: var(--text3); }
+    .ws-nav-badge.red { color: var(--red); }
+    .ws-nav-badge.yellow { color: var(--yellow); }
+
+    .ws-sidebar-tools { padding: 10px 8px 4px; }
+    .ws-tool-row { display: flex; align-items: center; gap: 6px; padding: 4px 6px; font-size: 11px; color: var(--text3); }
+    .ws-tool-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+    .ws-tool-type { margin-left: auto; font-size: 10px; color: var(--text3); }
+
+    .ws-health-bottom { margin-top: auto; padding: 14px; border-top: 1px solid var(--border); }
+    .ws-health-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 6px; }
+    .ws-health-score { font-size: 24px; font-weight: 800; letter-spacing: -1.5px; color: var(--text); line-height: 1; margin-bottom: 2px; }
+    .ws-health-sub { font-size: 10px; color: var(--text3); margin-bottom: 8px; }
+    .ws-health-bar { height: 2px; background: var(--border2); border-radius: 1px; overflow: hidden; }
+    .ws-health-fill { height: 100%; background: var(--yellow); width: 72%; border-radius: 1px; }
+    .ws-user { display: flex; align-items: center; gap: 7px; padding: 10px 8px 8px; border-top: 1px solid var(--border); }
+    .ws-user-av { width: 22px; height: 22px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: var(--text2); flex-shrink: 0; }
+    .ws-user-name { font-size: 11px; color: var(--text2); flex: 1; }
+    .ws-user-plan { font-size: 10px; color: var(--text3); }
+
+    .ws-main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .ws-main-header { padding: 12px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; flex-shrink: 0; background: var(--surface2); }
+    .ws-main-title { font-size: 13px; font-weight: 600; color: var(--text); }
+    .ws-main-sub { font-size: 11px; color: var(--text3); }
+    .ws-main-live { margin-left: auto; display: flex; align-items: center; gap: 4px; font-size: 10px; color: var(--green); font-weight: 500; }
+    .ws-main-live-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--green); animation: blink 2s infinite; }
+
+    .ws-content { flex: 1; overflow-y: auto; padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+    .ws-content::-webkit-scrollbar { width: 3px; }
+    .ws-content::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+    .ws-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: border-color .15s; }
+    .ws-card:hover { border-color: var(--border2); }
+    .ws-card-header { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: var(--surface2); }
+    .ws-card-title { font-size: 11px; font-weight: 600; color: var(--text2); }
+    .ws-card-action { font-size: 11px; color: var(--text3); cursor: pointer; }
+    .ws-card-body { padding: 12px 14px; }
+
+    .ws-metric-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); }
+    .ws-metric-cell { background: var(--surface); padding: 14px 16px; }
+    .ws-metric-label { font-size: 10px; color: var(--text3); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; }
+    .ws-metric-val { font-size: 20px; font-weight: 800; letter-spacing: -1px; color: var(--text); line-height: 1; margin-bottom: 3px; }
+    .ws-metric-trend { font-size: 11px; font-weight: 500; }
+
+    .ws-right { width: 220px; border-left: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto; background: var(--bg); }
+    .ws-right::-webkit-scrollbar { display: none; }
+    .ws-rp-section { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+    .ws-rp-section:last-child { border-bottom: none; }
+    .ws-rp-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 9px; }
+    .ws-metric-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; font-size: 11px; }
+    .ws-metric-name { color: var(--text3); }
+    .ws-metric-v { font-weight: 600; color: var(--text); }
+    .ws-metric-u { font-size: 10px; margin-left: 4px; }
+
+    .ws-cl-row { display: flex; align-items: center; gap: 6px; padding: 4px 0; border-bottom: 1px solid var(--border); }
+    .ws-cl-row:last-child { border-bottom: none; }
+    .ws-cl-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .ws-cl-name { font-size: 11px; color: var(--text2); flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ws-cl-val { font-size: 10px; color: var(--text3); }
+
+    .ws-act-row { display: flex; align-items: flex-start; gap: 6px; padding: 5px 0; border-bottom: 1px solid var(--border); }
+    .ws-act-row:last-child { border-bottom: none; }
+    .ws-act-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+    .ws-act-text { font-size: 10px; color: var(--text3); line-height: 1.4; flex: 1; }
+    .ws-act-time { font-size: 9px; color: var(--text3); margin-top: 2px; white-space: nowrap; }
+
+    /* ══════════════════════════════════
+       MODE 3: ASK (Terminal)
+    ══════════════════════════════════ */
+    #mode-ask { position: relative; }
+
+    .term-main { flex: 1; display: flex; overflow: hidden; position: relative; }
+
+    .term-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 32px 32px 20px; position: relative; overflow: hidden; }
+    .term-center::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 64px 64px; pointer-events: none; }
+
+    .term-answer-wrap { width: 100%; max-width: 640px; flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; gap: 16px; position: relative; z-index: 1; }
+
+    .term-empty { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .term-empty-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; margin-bottom: 2px; }
+    .term-empty-icon svg { width: 18px; height: 18px; opacity: 0.3; }
+    .term-empty-title { font-size: 15px; font-weight: 600; color: var(--text3); }
+    .term-empty-sub { font-size: 13px; color: var(--text3); line-height: 1.6; max-width: 300px; }
+
+    .term-question { font-size: 12px; color: var(--text2); background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 5px 14px; display: none; animation: fadeIn .3s ease both; }
+    .term-typing { display: none; align-items: center; gap: 4px; }
+    .term-typing-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--text3); animation: bounce 1.2s infinite; }
+    .term-typing-dot:nth-child(2) { animation-delay:.2s; }
+    .term-typing-dot:nth-child(3) { animation-delay:.4s; }
+    .term-answer { font-size: clamp(15px,2vw,20px); font-weight: 500; color: var(--text); line-height: 1.55; max-width: 620px; display: none; text-align: center; animation: fadeIn .4s ease both; }
+    .term-answer .r { color: var(--red); }
+    .term-answer .g { color: var(--green); }
+    .term-answer .y { color: var(--yellow); }
+    .term-answer strong { font-weight: 700; }
+    .term-sources { display: none; flex-wrap: wrap; gap: 5px; justify-content: center; animation: fadeIn .4s .1s ease both; }
+    .term-source { font-size: 11px; color: var(--text3); background: var(--surface); border: 1px solid var(--border); border-radius: 4px; padding: 2px 8px; display: flex; align-items: center; gap: 4px; }
+    .term-source-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--green); }
+
+    .term-input-wrap { width: 100%; max-width: 640px; display: flex; flex-direction: column; gap: 8px; position: relative; z-index: 1; }
+    .term-chips { display: flex; gap: 5px; overflow-x: auto; padding-bottom: 2px; }
+    .term-chips::-webkit-scrollbar { display: none; }
+    .term-chip { font-size: 11px; color: var(--text2); background: var(--surface2); border: 1px solid var(--border); border-radius: 5px; padding: 4px 9px; white-space: nowrap; cursor: pointer; flex-shrink: 0; transition: border-color .15s, color .15s; font-family: var(--font); }
+    .term-chip:hover { border-color: var(--border2); color: var(--text); }
+    .term-chip.active { border-color: var(--border2); color: var(--text); }
+
+    .term-input-bar { display: flex; gap: 8px; align-items: center; background: var(--surface); border: 1px solid var(--border2); border-radius: 10px; padding: 10px 14px; transition: border-color .2s; }
+    .term-input-bar:focus-within { border-color: var(--border2); }
+    .term-input { flex: 1; background: none; border: none; outline: none; font-family: var(--font); font-size: 13px; color: var(--text); }
+    .term-input::placeholder { color: var(--text3); }
+    .term-send { background: var(--text); border: none; border-radius: 6px; padding: 6px 12px; font-family: var(--font); font-size: 11px; font-weight: 600; color: var(--bg); cursor: pointer; transition: opacity .15s; white-space: nowrap; }
+    .term-send:hover { opacity: .85; }
+
+    .float-card { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); width: 230px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: none; animation: fadeInRight .3s ease both; z-index: 5; }
+    .fc-hdr { padding: 10px 13px; border-bottom: 1px solid var(--border); background: var(--surface2); display: flex; align-items: center; justify-content: space-between; }
+    .fc-hdr-title { font-size: 11px; font-weight: 600; color: var(--text2); }
+    .fc-hdr-tag { font-size: 10px; color: var(--text3); }
+    .fc-body { padding: 10px 13px; display: flex; flex-direction: column; gap: 6px; }
+
+    .fc-cl { display: flex; align-items: center; gap: 7px; padding: 4px 0; border-bottom: 1px solid var(--border); }
+    .fc-cl:last-child { border-bottom: none; }
+    .fc-cl-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .fc-cl-name { font-size: 11px; color: var(--text2); flex: 1; }
+    .fc-cl-status { font-size: 10px; font-weight: 600; }
+
+    .fc-met { display: flex; justify-content: space-between; align-items: baseline; padding: 4px 0; border-bottom: 1px solid var(--border); font-size: 11px; }
+    .fc-met:last-child { border-bottom: none; }
+    .fc-met-lbl { color: var(--text3); }
+    .fc-met-val { font-weight: 700; color: var(--text); }
+    .fc-met-trend { font-size: 10px; margin-left: 3px; }
+
+    .fc-deal { padding: 5px 0; border-bottom: 1px solid var(--border); }
+    .fc-deal:last-child { border-bottom: none; }
+    .fc-deal-name { font-size: 11px; color: var(--text2); margin-bottom: 2px; }
+    .fc-deal-meta { display: flex; justify-content: space-between; font-size: 10px; }
+    .fc-deal-val { font-weight: 600; color: var(--text); }
+
+    .fc-pri { display: flex; gap: 7px; padding: 4px 0; border-bottom: 1px solid var(--border); align-items: flex-start; }
+    .fc-pri:last-child { border-bottom: none; }
+    .fc-pri-num { font-size: 10px; font-weight: 700; color: var(--text3); flex-shrink: 0; padding-top: 1px; }
+    .fc-pri-text { font-size: 11px; color: var(--text2); line-height: 1.4; }
+
+    .fc-tm { display: flex; align-items: center; gap: 7px; padding: 4px 0; border-bottom: 1px solid var(--border); }
+    .fc-tm:last-child { border-bottom: none; }
+    .fc-tm-av { width: 18px; height: 18px; border-radius: 50%; background: var(--surface2); border: 1px solid var(--border2); display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 700; color: var(--text2); flex-shrink: 0; }
+    .fc-tm-name { font-size: 11px; color: var(--text2); flex: 1; }
+    .fc-tm-bar-w { width: 40px; height: 3px; background: var(--border2); border-radius: 2px; overflow: hidden; }
+    .fc-tm-bar-f { height: 100%; border-radius: 2px; }
+    .fc-tm-val { font-size: 10px; color: var(--text3); margin-left: 3px; width: 24px; text-align: right; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      .newspaper { grid-template-columns: 1fr 1fr; }
+      .card-alert-banner, .card-revenue, .card-clients, .card-pipeline, .card-wsig { grid-column: 1/-1; }
+      .card-health-b { grid-column: 1/2; }
+      .card-signals { grid-column: 2/3; }
+      .card-team { grid-column: 1/2; }
+      .card-activity { grid-column: 2/3; }
+      .ws-sidebar { width: 160px; }
+      .ws-right { display: none; }
+      .float-card { display: none !important; }
+    }
+
+    @media (max-width: 560px) {
+      .newspaper { grid-template-columns: 1fr; }
+      .card-alert-banner, .card-revenue, .card-health-b, .card-signals,
+      .card-clients, .card-pipeline, .card-team, .card-activity, .card-wsig { grid-column: 1/-1; }
+      .sel-grid { grid-template-columns: 1fr; }
+      .ws-sidebar { display: none; }
+      .ws-right { display: none; }
+      .mode-btn span { display: none; }
+      .term-center { padding: 20px 16px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ SELECTION SCREEN ══ -->
+<div id="sel-screen" class="screen active">
+  <div class="sel-inner">
+    <div class="sel-top">
+      <span class="sel-brand">Calar</span>
+      <div class="sel-badge"><div class="sel-badge-dot"></div>Interactive demo</div>
+    </div>
+    <h1 class="sel-headline">Pick a company.<br/>See what Calar knows.</h1>
+    <p class="sel-sub">Select the business type that looks most like yours.</p>
+    <p class="sel-label">Choose a company to explore</p>
+    <div class="sel-grid">
+      <div class="sel-card" onclick="selectCompany('fieldwork')">
+        <div class="sel-card-top"><div><div class="sel-card-name">Fieldwork</div><div class="sel-card-type">Digital Marketing Agency · Austin, TX · 14 people</div></div><div class="sel-card-arrow">→</div></div>
+        <div class="sel-stats"><div class="sel-stat-item"><div class="sel-stat-val">$112k</div><div class="sel-stat-label">MRR</div></div><div class="sel-stat-item"><div class="sel-stat-val">14</div><div class="sel-stat-label">Clients</div></div><div class="sel-stat-item"><div class="sel-stat-val">6</div><div class="sel-stat-label">Tools</div></div></div>
+        <div class="sel-tools"><span class="sel-tool">HubSpot</span><span class="sel-tool">Stripe</span><span class="sel-tool">Notion</span><span class="sel-tool">Linear</span><span class="sel-tool">Slack</span><span class="sel-tool">Gmail</span></div>
+        <div class="sel-situation"><span class="danger">2 quiet clients</span> · <span class="warn">overdue invoice</span> · stalled pipeline</div>
+      </div>
+      <div class="sel-card" onclick="selectCompany('northwave')">
+        <div class="sel-card-top"><div><div class="sel-card-name">Northwave</div><div class="sel-card-type">SaaS Startup · San Francisco, CA · 22 people</div></div><div class="sel-card-arrow">→</div></div>
+        <div class="sel-stats"><div class="sel-stat-item"><div class="sel-stat-val">$84k</div><div class="sel-stat-label">MRR</div></div><div class="sel-stat-item"><div class="sel-stat-val">380</div><div class="sel-stat-label">Subscribers</div></div><div class="sel-stat-item"><div class="sel-stat-val">6</div><div class="sel-stat-label">Tools</div></div></div>
+        <div class="sel-tools"><span class="sel-tool">Stripe</span><span class="sel-tool">HubSpot</span><span class="sel-tool">Linear</span><span class="sel-tool">Slack</span><span class="sel-tool">Intercom</span><span class="sel-tool">Notion</span></div>
+        <div class="sel-situation"><span class="danger">churn up 2%</span> · <span class="warn">3 enterprise deals stalled</span></div>
+      </div>
+      <div class="sel-card" onclick="selectCompany('vantage')">
+        <div class="sel-card-top"><div><div class="sel-card-name">Vantage</div><div class="sel-card-type">Management Consulting · New York, NY · 9 people</div></div><div class="sel-card-arrow">→</div></div>
+        <div class="sel-stats"><div class="sel-stat-item"><div class="sel-stat-val">$165k</div><div class="sel-stat-label">Monthly</div></div><div class="sel-stat-item"><div class="sel-stat-val">6</div><div class="sel-stat-label">Engagements</div></div><div class="sel-stat-item"><div class="sel-stat-val">6</div><div class="sel-stat-label">Tools</div></div></div>
+        <div class="sel-tools"><span class="sel-tool">HubSpot</span><span class="sel-tool">Harvest</span><span class="sel-tool">Notion</span><span class="sel-tool">Slack</span><span class="sel-tool">Gmail</span><span class="sel-tool">QuickBooks</span></div>
+        <div class="sel-situation"><span class="danger">1 engagement ending</span> · <span class="warn">2 stale proposals</span></div>
+      </div>
+      <div class="sel-card" onclick="selectCompany('folio')">
+        <div class="sel-card-top"><div><div class="sel-card-name">Folio</div><div class="sel-card-type">E-commerce Brand · Los Angeles, CA · 7 people</div></div><div class="sel-card-arrow">→</div></div>
+        <div class="sel-stats"><div class="sel-stat-item"><div class="sel-stat-val">$310k</div><div class="sel-stat-label">Monthly</div></div><div class="sel-stat-item"><div class="sel-stat-val">DTC</div><div class="sel-stat-label">Skincare</div></div><div class="sel-stat-item"><div class="sel-stat-val">6</div><div class="sel-stat-label">Tools</div></div></div>
+        <div class="sel-tools"><span class="sel-tool">Shopify</span><span class="sel-tool">Klaviyo</span><span class="sel-tool">Gorgias</span><span class="sel-tool">Triple Whale</span><span class="sel-tool">Recharge</span><span class="sel-tool">Slack</span></div>
+        <div class="sel-situation"><span class="danger">ROAS down 18%</span> · <span class="warn">12 days inventory left</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LOADING SCREEN ══ -->
+<div id="load-screen" class="screen">
+  <div class="load-company" id="load-company">Connecting Fieldwork...</div>
+  <div class="load-bar-wrap"><div class="load-bar" id="load-bar"></div></div>
+  <div class="load-status" id="load-status">Authenticating tools...</div>
+</div>
+
+<!-- ══ APP SCREEN ══ -->
+<div id="app-screen" class="screen">
+
+  <!-- App Nav -->
+  <div class="app-nav">
+    <span class="app-nav-brand">Calar</span>
+    <div class="app-nav-divider"></div>
+    <div class="app-nav-company">
+      <div class="app-nav-dot"></div>
+      <span id="app-company-label">Fieldwork Agency</span>
+    </div>
+    <!-- Mode switcher -->
+    <div class="mode-switcher" style="margin-left:12px">
+      <button class="mode-btn active" data-mode="overview" onclick="switchMode('overview')">
+        <svg class="mode-icon" viewBox="0 0 12 12" fill="none"><rect x="0" y="0" width="5" height="5" rx="1" fill="currentColor"/><rect x="7" y="0" width="5" height="5" rx="1" fill="currentColor" opacity=".4"/><rect x="0" y="7" width="5" height="5" rx="1" fill="currentColor" opacity=".4"/><rect x="7" y="7" width="5" height="5" rx="1" fill="currentColor" opacity=".4"/></svg>
+        <span>Overview</span>
+      </button>
+      <button class="mode-btn" data-mode="workspace" onclick="switchMode('workspace')">
+        <svg class="mode-icon" viewBox="0 0 12 12" fill="none"><rect x="0" y="0" width="3" height="12" rx="1" fill="currentColor" opacity=".4"/><rect x="4.5" y="0" width="7.5" height="5" rx="1" fill="currentColor"/><rect x="4.5" y="7" width="7.5" height="5" rx="1" fill="currentColor" opacity=".4"/></svg>
+        <span>Workspace</span>
+      </button>
+      <button class="mode-btn" data-mode="ask" onclick="switchMode('ask')">
+        <svg class="mode-icon" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4" stroke="currentColor" stroke-width="1.2"/><path d="M4.5 5C4.5 4.17 5.17 3.5 6 3.5C6.83 3.5 7.5 4.17 7.5 5C7.5 5.6 7.2 6.1 6.7 6.4L6 6.8V7.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><circle cx="6" cy="9" r=".5" fill="currentColor"/></svg>
+        <span>Ask</span>
+      </button>
+    </div>
+    <div class="app-nav-right">
+      <span class="app-nav-date">Monday, May 5 · 2026</span>
+      <div class="app-nav-live"><div class="app-nav-live-dot"></div>Live</div>
+      <button class="app-nav-back" onclick="goBack()">← Switch company</button>
+      <div class="app-nav-avatar">KG</div>
+    </div>
+  </div>
+
+  <!-- ══ OVERVIEW MODE ══ -->
+  <div id="mode-overview" class="mode-panel active">
+    <div id="mode-overview" style="overflow-y:auto;flex:1">
+    <div style="overflow-y:auto;flex:1" id="ov-scroll">
+    <div class="overview-inner">
+      <div class="ov-header">
+        <div class="ov-header-left">
+          <div class="ov-eyebrow">Week 18 · Monday morning</div>
+          <div class="ov-title" id="ov-greeting">Good morning. Here's what's happening.</div>
+        </div>
+        <div class="ov-health">
+          <div class="health-ring-wrap">
+            <svg viewBox="0 0 40 40"><circle class="hring-bg" cx="20" cy="20" r="17"/><circle class="hring-fill" cx="20" cy="20" r="17"/></svg>
+            <div class="hring-num">72</div>
+          </div>
+          <div><div class="ov-health-text-label">Business health</div><div class="ov-health-text-status">3 risks flagged</div></div>
+        </div>
+      </div>
+
+      <div class="newspaper">
+        <!-- Alert -->
+        <div class="card card-alert-banner">
+          <div class="alert-dot"></div>
+          <div class="alert-text-w"><div class="alert-ttl"><span class="r">Acme Corp</span> — invoice overdue · $14,000 · 18 days · no response</div><div class="alert-dsc">Three emails sent. No reply. This is your biggest at-risk account. A phone call today is non-negotiable.</div></div>
+          <div class="alert-acts"><button class="alert-btn-p">Call now</button><button class="alert-btn-s">Snooze</button></div>
+        </div>
+        <!-- Revenue -->
+        <div class="card card-revenue">
+          <div class="card-header"><span class="card-title">Monthly Recurring Revenue</span><span class="card-action">6 months →</span></div>
+          <div class="card-body">
+            <div class="rev-main"><span class="rev-num">$112,400</span><span class="rev-trend">↑ 4.2%</span></div>
+            <div class="rev-sub">vs $107,870 last month · 2 new retainers closed</div>
+            <svg class="spark-svg" viewBox="0 0 400 56" fill="none" preserveAspectRatio="none"><path d="M0,50 C60,46 100,42 160,34 C220,26 280,18 340,10 C360,8 380,6 400,3" stroke="var(--green)" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="400" cy="3" r="3" fill="var(--green)"/></svg>
+            <div class="spark-labels"><span class="spark-lbl">Nov</span><span class="spark-lbl">Dec</span><span class="spark-lbl">Jan</span><span class="spark-lbl">Feb</span><span class="spark-lbl">Mar</span><span class="spark-lbl">Apr</span></div>
+            <div class="rev-grid">
+              <div class="rev-cell"><div class="rev-cell-lbl">New MRR</div><div class="rev-cell-val">$16,200</div><div class="rev-cell-sub" style="color:var(--green)">↑ 2 new clients</div></div>
+              <div class="rev-cell"><div class="rev-cell-lbl">Churn risk</div><div class="rev-cell-val" style="color:var(--red)">$14,000</div><div class="rev-cell-sub" style="color:var(--red)">Acme Corp</div></div>
+              <div class="rev-cell"><div class="rev-cell-lbl">Pipeline</div><div class="rev-cell-val">$48,000</div><div class="rev-cell-sub" style="color:var(--yellow)">3 stalled</div></div>
+              <div class="rev-cell"><div class="rev-cell-lbl">Goal</div><div class="rev-cell-val">74%</div><div class="rev-cell-sub" style="color:var(--yellow)">$130k target</div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Health -->
+        <div class="card card-health-b">
+          <div class="card-header"><span class="card-title">Health Breakdown</span></div>
+          <div class="card-body">
+            <div class="hbig">72</div>
+            <div class="hbig-sub">out of 100 · 3 risks flagged</div>
+            <div class="hbar"><div class="hbar-top"><span class="hbar-name">Revenue</span><span class="hbar-val" style="color:var(--green)">84</span></div><div class="hbar-track"><div class="hbar-fill" style="width:84%;background:var(--green)"></div></div></div>
+            <div class="hbar"><div class="hbar-top"><span class="hbar-name">Clients</span><span class="hbar-val" style="color:var(--yellow)">61</span></div><div class="hbar-track"><div class="hbar-fill" style="width:61%;background:var(--yellow)"></div></div></div>
+            <div class="hbar"><div class="hbar-top"><span class="hbar-name">Pipeline</span><span class="hbar-val" style="color:var(--yellow)">58</span></div><div class="hbar-track"><div class="hbar-fill" style="width:58%;background:var(--yellow)"></div></div></div>
+            <div class="hbar"><div class="hbar-top"><span class="hbar-name">Team</span><span class="hbar-val" style="color:var(--red)">48</span></div><div class="hbar-track"><div class="hbar-fill" style="width:48%;background:var(--red)"></div></div></div>
+            <div class="hbar"><div class="hbar-top"><span class="hbar-name">Cash flow</span><span class="hbar-val" style="color:var(--green)">78</span></div><div class="hbar-track"><div class="hbar-fill" style="width:78%;background:var(--green)"></div></div></div>
+          </div>
+        </div>
+        <!-- Signals -->
+        <div class="card card-signals">
+          <div class="card-header"><span class="card-title">Key Signals</span><span class="card-meta">Live</span></div>
+          <div class="card-body">
+            <div class="sig-item"><div class="sig-dot" style="background:var(--green)"></div><span class="sig-label">Active clients</span><span class="sig-val">14<span class="sig-trend" style="color:var(--green)"> +2</span></span></div>
+            <div class="sig-item"><div class="sig-dot" style="background:var(--red)"></div><span class="sig-label">At-risk clients</span><span class="sig-val">3<span class="sig-trend" style="color:var(--red)"> ↑</span></span></div>
+            <div class="sig-item"><div class="sig-dot" style="background:var(--yellow)"></div><span class="sig-label">Projects behind</span><span class="sig-val">2</span></div>
+            <div class="sig-item"><div class="sig-dot" style="background:var(--yellow)"></div><span class="sig-label">Team utilization</span><span class="sig-val">94%</span></div>
+            <div class="sig-item"><div class="sig-dot" style="background:var(--red)"></div><span class="sig-label">Overdue invoices</span><span class="sig-val" style="color:var(--red)">$14k</span></div>
+            <div class="sig-item"><div class="sig-dot" style="background:var(--yellow)"></div><span class="sig-label">Stalled deals</span><span class="sig-val">3<span class="sig-trend" style="color:var(--yellow)"> $48k</span></span></div>
+          </div>
+        </div>
+        <!-- Clients -->
+        <div class="card card-clients">
+          <div class="card-header"><span class="card-title">Client Health · 14 active</span><span class="card-action">View all →</span></div>
+          <div class="card-body">
+            <div class="cl-row"><div class="cl-dot" style="background:var(--green)"></div><span class="cl-name">TechFlow Inc</span><span class="cl-mrr">$18,000</span><span class="cl-last">Active 2d ago</span><span class="cl-badge" style="background:rgba(34,197,94,0.08);color:var(--green)">Healthy</span></div>
+            <div class="cl-row"><div class="cl-dot" style="background:var(--green)"></div><span class="cl-name">Luna Brands</span><span class="cl-mrr">$12,000</span><span class="cl-last">Active today</span><span class="cl-badge" style="background:rgba(34,197,94,0.08);color:var(--green)">Healthy</span></div>
+            <div class="cl-row"><div class="cl-dot" style="background:var(--green)"></div><span class="cl-name">Mosaic Studio</span><span class="cl-mrr">$9,000</span><span class="cl-last">Active 1d ago</span><span class="cl-badge" style="background:rgba(34,197,94,0.08);color:var(--green)">Healthy</span></div>
+            <div class="cl-row"><div class="cl-dot" style="background:var(--yellow)"></div><span class="cl-name">Veritas Co</span><span class="cl-mrr">$11,000</span><span class="cl-last">3 tickets open</span><span class="cl-badge" style="background:rgba(245,158,11,0.08);color:var(--yellow)">Watch</span></div>
+            <div class="cl-row"><div class="cl-dot" style="background:var(--red)"></div><span class="cl-name">Acme Corp</span><span class="cl-mrr">$14,000</span><span class="cl-last">18d silent</span><span class="cl-badge" style="background:rgba(239,68,68,0.08);color:var(--red)">At risk</span></div>
+            <div class="cl-row"><div class="cl-dot" style="background:var(--red)"></div><span class="cl-name">Bright Co</span><span class="cl-mrr">$8,000</span><span class="cl-last">Eng. ↓60%</span><span class="cl-badge" style="background:rgba(239,68,68,0.08);color:var(--red)">At risk</span></div>
+          </div>
+        </div>
+        <!-- Pipeline -->
+        <div class="card card-pipeline">
+          <div class="card-header"><span class="card-title">Pipeline · $48,000</span><span class="card-action">View all →</span></div>
+          <div class="card-body">
+            <div class="pipe-head"><span>Deal</span><span style="text-align:right">Value</span><span style="text-align:right">Last contact</span><span style="text-align:right">Stage</span></div>
+            <div class="deal-row"><div><div class="deal-name">Meridian Group</div><div class="deal-co">Marketing</div></div><div class="deal-val">$18k</div><div class="deal-days" style="color:var(--yellow)">16 days ago</div><div class="deal-badge" style="background:rgba(245,158,11,0.08);color:var(--yellow)">Proposal</div></div>
+            <div class="deal-row"><div><div class="deal-name">Axle Studio</div><div class="deal-co">Design</div></div><div class="deal-val">$12k</div><div class="deal-days" style="color:var(--yellow)">No reply</div><div class="deal-badge" style="background:rgba(245,158,11,0.08);color:var(--yellow)">Proposal</div></div>
+            <div class="deal-row"><div><div class="deal-name">Forma Co</div><div class="deal-co">E-commerce</div></div><div class="deal-val">$22k</div><div class="deal-days" style="color:var(--red)">21 days ago</div><div class="deal-badge" style="background:rgba(239,68,68,0.08);color:var(--red)">Cold</div></div>
+            <div class="deal-row"><div><div class="deal-name">Bluewave Inc</div><div class="deal-co">SaaS</div></div><div class="deal-val">$9k</div><div class="deal-days" style="color:var(--green)">Yesterday</div><div class="deal-badge" style="background:rgba(34,197,94,0.08);color:var(--green)">Discovery</div></div>
+          </div>
+        </div>
+        <!-- Team -->
+        <div class="card card-team">
+          <div class="card-header"><span class="card-title">Team · Avg 94%</span><span class="card-action">View all →</span></div>
+          <div class="card-body">
+            <div class="tm-row"><div class="tm-av">JR</div><div class="tm-info"><div class="tm-name">James R.</div><div class="tm-role">Designer · 4 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:98%;background:var(--red)"></div></div><div class="tm-util" style="color:var(--red)">98%</div></div></div>
+            <div class="tm-row"><div class="tm-av">SK</div><div class="tm-info"><div class="tm-name">Sara K.</div><div class="tm-role">Copywriter · 3 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:88%;background:var(--yellow)"></div></div><div class="tm-util" style="color:var(--yellow)">88%</div></div></div>
+            <div class="tm-row"><div class="tm-av">MP</div><div class="tm-info"><div class="tm-name">Mike P.</div><div class="tm-role">Strategist · 2 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:72%;background:var(--border2)"></div></div><div class="tm-util">72%</div></div></div>
+            <div class="tm-row"><div class="tm-av">AL</div><div class="tm-info"><div class="tm-name">Amy L.</div><div class="tm-role">Account Mgr · 2 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:65%;background:var(--border2)"></div></div><div class="tm-util">65%</div></div></div>
+          </div>
+        </div>
+        <!-- Activity -->
+        <div class="card card-activity">
+          <div class="card-header"><span class="card-title">Activity Feed</span><span class="card-meta">Live</span></div>
+          <div class="card-body">
+            <div class="act-item"><div class="act-left"><div class="act-dot" style="background:var(--red)"></div><div class="act-line"></div></div><div><div class="act-text"><strong>Acme Corp</strong> invoice overdue — no response to 3 emails</div><div class="act-time">18 days · $14,000 <span class="act-tool">Stripe</span></div></div></div>
+            <div class="act-item"><div class="act-left"><div class="act-dot" style="background:var(--yellow)"></div><div class="act-line"></div></div><div><div class="act-text"><strong>Veritas Co</strong> submitted 3rd support ticket this week</div><div class="act-time">2 hours ago <span class="act-tool">Slack</span></div></div></div>
+            <div class="act-item"><div class="act-left"><div class="act-dot" style="background:var(--green)"></div><div class="act-line"></div></div><div><div class="act-text"><strong>Luna Brands</strong> renewed retainer — $12,000/month</div><div class="act-time">Today · 9:14 AM <span class="act-tool">Stripe</span></div></div></div>
+            <div class="act-item"><div class="act-left"><div class="act-dot" style="background:var(--yellow)"></div><div class="act-line"></div></div><div><div class="act-text"><strong>Forma Co</strong> deal — 21 days without contact</div><div class="act-time">Yesterday <span class="act-tool">HubSpot</span></div></div></div>
+            <div class="act-item"><div class="act-left"><div class="act-dot" style="background:var(--green)"></div><div class="act-line"></div></div><div><div class="act-text"><strong>TechFlow Inc</strong> milestone delivered on time</div><div class="act-time">Yesterday · 4:30 PM <span class="act-tool">Linear</span></div></div></div>
+          </div>
+        </div>
+        <!-- Weekly Signal -->
+        <div class="card card-wsig">
+          <div class="card-header"><span class="card-title">Weekly Signal</span><span class="card-action">Archive →</span></div>
+          <div class="card-body">
+            <div class="wsig-date">Monday, May 5 · Week 18</div>
+            <p class="wsig-para">Revenue is <span class="g">up 4.2%</span> — two new retainers closed. But <span class="r">Acme Corp</span> hasn't responded in 18 days. That's your call today.</p>
+            <p class="wsig-para">You have <strong>$48,000</strong> in pipeline going cold. Push this week.</p>
+            <div class="wsig-action"><strong>Focus:</strong> Acme call today. Pipeline push by Thursday. Find who's overloaded.</div>
+            <div class="wsig-more">Read full briefing <span>→</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!-- ══ WORKSPACE MODE ══ -->
+  <div id="mode-workspace" class="mode-panel">
+    <!-- Sidebar -->
+    <div class="ws-sidebar">
+      <div class="ws-sidebar-section">
+        <div class="ws-sidebar-label">Intelligence</div>
+        <div class="ws-nav-item active"><div class="ws-nav-dot"></div>Overview<span class="ws-nav-badge red">3</span></div>
+        <div class="ws-nav-item"><div class="ws-nav-dot"></div>Revenue<span class="ws-nav-badge" style="color:var(--green)">↑4.2%</span></div>
+        <div class="ws-nav-item"><div class="ws-nav-dot"></div>Clients<span class="ws-nav-badge red">2</span></div>
+        <div class="ws-nav-item"><div class="ws-nav-dot"></div>Pipeline<span class="ws-nav-badge yellow">$48k</span></div>
+        <div class="ws-nav-item"><div class="ws-nav-dot"></div>Team<span class="ws-nav-badge yellow">94%</span></div>
+        <div class="ws-nav-item"><div class="ws-nav-dot"></div>Signals</div>
+      </div>
+      <div class="ws-sidebar-tools">
+        <div class="ws-sidebar-label">Connected tools</div>
+        <div class="ws-tool-row"><div class="ws-tool-dot"></div><span style="font-size:11px;color:var(--text2)">HubSpot</span><span class="ws-tool-type">CRM</span></div>
+        <div class="ws-tool-row"><div class="ws-tool-dot"></div><span style="font-size:11px;color:var(--text2)">Stripe</span><span class="ws-tool-type">Billing</span></div>
+        <div class="ws-tool-row"><div class="ws-tool-dot"></div><span style="font-size:11px;color:var(--text2)">Notion</span><span class="ws-tool-type">Docs</span></div>
+        <div class="ws-tool-row"><div class="ws-tool-dot"></div><span style="font-size:11px;color:var(--text2)">Linear</span><span class="ws-tool-type">Projects</span></div>
+        <div class="ws-tool-row"><div class="ws-tool-dot"></div><span style="font-size:11px;color:var(--text2)">Slack</span><span class="ws-tool-type">Comms</span></div>
+        <div class="ws-tool-row"><div class="ws-tool-dot"></div><span style="font-size:11px;color:var(--text2)">Gmail</span><span class="ws-tool-type">Email</span></div>
+      </div>
+      <div style="margin-top:auto">
+        <div class="ws-health-bottom">
+          <div class="ws-health-label">Business health</div>
+          <div class="ws-health-score">72</div>
+          <div class="ws-health-sub">/ 100 · 3 risks flagged</div>
+          <div class="ws-health-bar"><div class="ws-health-fill"></div></div>
+        </div>
+        <div class="ws-user">
+          <div class="ws-user-av">KG</div>
+          <div><div class="ws-user-name">Krib Group</div><div class="ws-user-plan">Pro plan</div></div>
+        </div>
+      </div>
+    </div>
+    <!-- Main -->
+    <div class="ws-main">
+      <div class="ws-main-header">
+        <div>
+          <div class="ws-main-title">Fieldwork Agency — Overview</div>
+          <div class="ws-main-sub">6 tools connected · Last synced 2h ago</div>
+        </div>
+        <div class="ws-main-live"><div class="ws-main-live-dot"></div>Live</div>
+      </div>
+      <div class="ws-content">
+        <!-- Metric strip -->
+        <div class="ws-card">
+          <div class="ws-metric-grid">
+            <div class="ws-metric-cell"><div class="ws-metric-label">MRR</div><div class="ws-metric-val">$112k</div><div class="ws-metric-trend" style="color:var(--green)">↑ 4.2%</div></div>
+            <div class="ws-metric-cell"><div class="ws-metric-label">Pipeline</div><div class="ws-metric-val">$48k</div><div class="ws-metric-trend" style="color:var(--yellow)">3 stalled</div></div>
+            <div class="ws-metric-cell"><div class="ws-metric-label">At-risk clients</div><div class="ws-metric-val" style="color:var(--red)">3</div><div class="ws-metric-trend" style="color:var(--red)">↑ from 1</div></div>
+            <div class="ws-metric-cell"><div class="ws-metric-label">Team util.</div><div class="ws-metric-val">94%</div><div class="ws-metric-trend" style="color:var(--yellow)">Near limit</div></div>
+          </div>
+        </div>
+        <!-- Clients -->
+        <div class="ws-card">
+          <div class="ws-card-header"><span class="ws-card-title">Client Health</span><span class="ws-card-action">View all →</span></div>
+          <div class="ws-card-body">
+            <div class="cl-row"><div class="cl-dot" style="background:var(--green)"></div><span class="cl-name">TechFlow Inc</span><span class="cl-mrr">$18,000</span><span class="cl-last">Active 2d ago</span><span class="cl-badge" style="background:rgba(34,197,94,0.08);color:var(--green)">Healthy</span></div>
+            <div class="cl-row"><div class="cl-dot" style="background:var(--green)"></div><span class="cl-name">Luna Brands</span><span class="cl-mrr">$12,000</span><span class="cl-last">Active today</span><span class="cl-badge" style="background:rgba(34,197,94,0.08);color:var(--green)">Healthy</span></div>
+            <div class="cl-row"><div class="cl-dot" style="background:var(--yellow)"></div><span class="cl-name">Veritas Co</span><span class="cl-mrr">$11,000</span><span class="cl-last">3 tickets open</span><span class="cl-badge" style="background:rgba(245,158,11,0.08);color:var(--yellow)">Watch</span></div>
+            <div class="cl-row"><div class="cl-dot" style="background:var(--red)"></div><span class="cl-name">Acme Corp</span><span class="cl-mrr">$14,000</span><span class="cl-last">18d silent</span><span class="cl-badge" style="background:rgba(239,68,68,0.08);color:var(--red)">At risk</span></div>
+            <div class="cl-row"><div class="cl-dot" style="background:var(--red)"></div><span class="cl-name">Bright Co</span><span class="cl-mrr">$8,000</span><span class="cl-last">Eng. ↓60%</span><span class="cl-badge" style="background:rgba(239,68,68,0.08);color:var(--red)">At risk</span></div>
+          </div>
+        </div>
+        <!-- Pipeline -->
+        <div class="ws-card">
+          <div class="ws-card-header"><span class="ws-card-title">Pipeline · $48,000</span><span class="ws-card-action">View all →</span></div>
+          <div class="ws-card-body">
+            <div class="pipe-head"><span>Deal</span><span style="text-align:right">Value</span><span style="text-align:right">Last contact</span><span style="text-align:right">Stage</span></div>
+            <div class="deal-row"><div><div class="deal-name">Meridian Group</div><div class="deal-co">Marketing</div></div><div class="deal-val">$18k</div><div class="deal-days" style="color:var(--yellow)">16 days ago</div><div class="deal-badge" style="background:rgba(245,158,11,0.08);color:var(--yellow)">Proposal</div></div>
+            <div class="deal-row"><div><div class="deal-name">Axle Studio</div><div class="deal-co">Design</div></div><div class="deal-val">$12k</div><div class="deal-days" style="color:var(--yellow)">No reply</div><div class="deal-badge" style="background:rgba(245,158,11,0.08);color:var(--yellow)">Proposal</div></div>
+            <div class="deal-row"><div><div class="deal-name">Forma Co</div><div class="deal-co">E-commerce</div></div><div class="deal-val">$22k</div><div class="deal-days" style="color:var(--red)">21 days ago</div><div class="deal-badge" style="background:rgba(239,68,68,0.08);color:var(--red)">Cold</div></div>
+          </div>
+        </div>
+        <!-- Team -->
+        <div class="ws-card">
+          <div class="ws-card-header"><span class="ws-card-title">Team Utilization</span><span class="ws-card-action">View all →</span></div>
+          <div class="ws-card-body">
+            <div class="tm-row"><div class="tm-av">JR</div><div class="tm-info"><div class="tm-name">James R.</div><div class="tm-role">Designer · 4 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:98%;background:var(--red)"></div></div><div class="tm-util" style="color:var(--red)">98%</div></div></div>
+            <div class="tm-row"><div class="tm-av">SK</div><div class="tm-info"><div class="tm-name">Sara K.</div><div class="tm-role">Copywriter · 3 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:88%;background:var(--yellow)"></div></div><div class="tm-util" style="color:var(--yellow)">88%</div></div></div>
+            <div class="tm-row"><div class="tm-av">MP</div><div class="tm-info"><div class="tm-name">Mike P.</div><div class="tm-role">Strategist · 2 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:72%;background:var(--border2)"></div></div><div class="tm-util">72%</div></div></div>
+            <div class="tm-row"><div class="tm-av">AL</div><div class="tm-info"><div class="tm-name">Amy L.</div><div class="tm-role">Account Mgr · 2 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:65%;background:var(--border2)"></div></div><div class="tm-util">65%</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Right panel -->
+    <div class="ws-right">
+      <div class="ws-rp-section">
+        <div class="ws-rp-label">Snapshot</div>
+        <div class="ws-metric-row"><span class="ws-metric-name">MRR</span><div><span class="ws-metric-v">$112k</span><span class="ws-metric-u" style="color:var(--green)">↑4.2%</span></div></div>
+        <div class="ws-metric-row"><span class="ws-metric-name">Pipeline</span><span class="ws-metric-v">$48,000</span></div>
+        <div class="ws-metric-row"><span class="ws-metric-name">Overdue</span><div><span class="ws-metric-v" style="color:var(--red)">$14k</span><span class="ws-metric-u" style="color:var(--red)">risk</span></div></div>
+        <div class="ws-metric-row"><span class="ws-metric-name">Goal</span><span class="ws-metric-v">74%</span></div>
+      </div>
+      <div class="ws-rp-section">
+        <div class="ws-rp-label">Client health</div>
+        <div class="ws-cl-row"><div class="ws-cl-dot" style="background:var(--green)"></div><span class="ws-cl-name">TechFlow Inc</span><span class="ws-cl-val">$18k</span></div>
+        <div class="ws-cl-row"><div class="ws-cl-dot" style="background:var(--green)"></div><span class="ws-cl-name">Luna Brands</span><span class="ws-cl-val">$12k</span></div>
+        <div class="ws-cl-row"><div class="ws-cl-dot" style="background:var(--green)"></div><span class="ws-cl-name">Mosaic Studio</span><span class="ws-cl-val">$9k</span></div>
+        <div class="ws-cl-row"><div class="ws-cl-dot" style="background:var(--yellow)"></div><span class="ws-cl-name">Veritas Co</span><span class="ws-cl-val">$11k</span></div>
+        <div class="ws-cl-row"><div class="ws-cl-dot" style="background:var(--red)"></div><span class="ws-cl-name">Acme Corp</span><span class="ws-cl-val">$14k</span></div>
+        <div class="ws-cl-row"><div class="ws-cl-dot" style="background:var(--red)"></div><span class="ws-cl-name">Bright Co</span><span class="ws-cl-val">$8k</span></div>
+      </div>
+      <div class="ws-rp-section">
+        <div class="ws-rp-label">Recent activity</div>
+        <div class="ws-act-row"><div class="ws-act-dot" style="background:var(--red)"></div><div><div class="ws-act-text">Acme Corp invoice overdue</div><div class="ws-act-time">18d ago</div></div></div>
+        <div class="ws-act-row"><div class="ws-act-dot" style="background:var(--yellow)"></div><div><div class="ws-act-text">Veritas opened 3 tickets</div><div class="ws-act-time">2h ago</div></div></div>
+        <div class="ws-act-row"><div class="ws-act-dot" style="background:var(--green)"></div><div><div class="ws-act-text">Luna Brands renewed</div><div class="ws-act-time">Today</div></div></div>
+        <div class="ws-act-row"><div class="ws-act-dot" style="background:var(--border2)"></div><div><div class="ws-act-text">2 new deals added</div><div class="ws-act-time">Today</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ASK MODE ══ -->
+  <div id="mode-ask" class="mode-panel">
+    <div class="term-main">
+      <div class="term-center">
+        <div class="term-answer-wrap">
+          <div class="term-empty" id="term-empty">
+            <div class="term-empty-icon">
+              <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="white" stroke-width="1.2"/><path d="M9 6v3l2 2" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </div>
+            <div class="term-empty-title">Ask Calar anything.</div>
+            <div class="term-empty-sub" id="term-empty-sub">Select a question below or type your own.</div>
+          </div>
+          <div class="term-typing" id="term-typing">
+            <div class="term-typing-dot"></div><div class="term-typing-dot"></div><div class="term-typing-dot"></div>
+          </div>
+          <div class="term-question" id="term-question"></div>
+          <div class="term-answer" id="term-answer"></div>
+          <div class="term-sources" id="term-sources"></div>
+        </div>
+        <div class="term-input-wrap">
+          <div class="term-chips" id="term-chips"></div>
+          <div class="term-input-bar">
+            <input class="term-input" id="term-input" placeholder="Ask anything about this business..." onkeydown="handleKey(event)"/>
+            <button class="term-send" onclick="askQuestion()">Ask →</button>
+          </div>
+        </div>
+      </div>
+      <div class="float-card" id="float-card">
+        <div class="fc-hdr"><span class="fc-hdr-title" id="fc-title">Data</span><span class="fc-hdr-tag" id="fc-tag">Live</span></div>
+        <div class="fc-body" id="fc-body"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end app-screen -->
+
+<script>
+// ═══════════════════════════════
+// DATA
+// ═══════════════════════════════
+const companies = {
+  fieldwork: {
+    name: 'Fieldwork Agency',
+    loadingSteps: ['Authenticating HubSpot...','Syncing Stripe data...','Reading Linear tasks...','Mapping client relationships...','Intelligence layer ready.'],
+    chips: [
+      {label:'Which clients are at risk?',key:'clients'},
+      {label:"What's our MRR trend?",key:'mrr'},
+      {label:'Which deals have gone silent?',key:'pipeline'},
+      {label:'What should I focus on this week?',key:'focus'},
+      {label:'Who on the team is overloaded?',key:'team'},
+    ],
+    answers: {
+      clients:{answer:'Three clients are showing risk signals right now. <span class="r">Acme Corp</span> hasn\'t responded in 18 days and has a $14,000 invoice overdue — that\'s your biggest exposure. <span class="r">Bright Co</span> engagement dropped 60% this month with no explanation. <span class="y">Veritas</span> filed 3 support tickets this week — unusual for them. Reach out to all three personally before Friday.',sources:['HubSpot','Stripe','Gmail'],card:'clients_fw'},
+      mrr:{answer:'MRR is <strong>$112,400</strong> — <span class="g">up 4.2%</span> from last month. Two new retainers came in at $7,200 and $9,000. Watch out: if Acme Corp churns you lose $14,000/month which puts you back below April.',sources:['Stripe'],card:'mrr_fw'},
+      pipeline:{answer:'Three deals in your pipeline haven\'t moved in over two weeks. <span class="y">Meridian Group</span> — $18,000, last contact 16 days ago. <span class="y">Axle Studio</span> — $12,000, proposal opened but no reply. <span class="r">Forma Co</span> — $22,000, last touched 21 days ago. These are going cold.',sources:['HubSpot'],card:'pipeline_fw'},
+      focus:{answer:'Three things this week. Call <span class="r">Acme Corp</span> today — not email, they\'re not responding. Push on <strong>$52,000</strong> in stalled pipeline before it goes cold. And find out who on the team is overloaded — two projects are behind schedule.',sources:['HubSpot','Linear','Stripe'],card:'focus_fw'},
+      team:{answer:'<span class="r">James R. is at 98% utilization</span> — he\'s across 4 active projects simultaneously and two of them are behind deadline. <span class="y">Sara K. is at 88%</span> and approaching her limit. James needs relief this week before something breaks.',sources:['Linear','Notion'],card:'team_fw'},
+    },
+  },
+  northwave: {
+    name: 'Northwave',
+    loadingSteps: ['Authenticating Stripe...','Syncing subscriber data...','Reading Intercom tickets...','Mapping churn signals...','Intelligence layer ready.'],
+    chips: [
+      {label:"What's our churn situation?",key:'churn'},
+      {label:'Which enterprise deals are closest?',key:'pipeline'},
+      {label:"What's our MRR trend?",key:'mrr'},
+      {label:'What should I focus on this week?',key:'focus'},
+      {label:'Which customers need attention?',key:'customers'},
+    ],
+    answers: {
+      churn:{answer:'Churn rate is <span class="r">up 2% to 4.8%</span> — that\'s 18 subscribers who left this month vs 11 last month. The common thread: all were on the starter plan for over 6 months without upgrading. Your expansion motion is the real problem here.',sources:['Stripe','Intercom'],card:'churn_nw'},
+      pipeline:{answer:'Three enterprise deals are in final stages. <span class="g">Apex Ventures</span> — $36k ARR, contract sent. <span class="y">Bluebird Labs</span> — $28k ARR, needs CFO sign-off. <span class="y">Crestholm</span> — $22k ARR, gone quiet after the demo last week. Follow up on Crestholm today.',sources:['HubSpot'],card:'pipeline_nw'},
+      mrr:{answer:'MRR is <strong>$84,200</strong> — <span class="y">flat vs last month</span>. New revenue ($8,400) was almost entirely offset by churn ($7,800). You\'re on a treadmill. If the three enterprise deals close, you jump to $94k+.',sources:['Stripe'],card:'mrr_nw'},
+      focus:{answer:'Three things. Follow up with <span class="y">Crestholm</span> today — that deal went quiet after the demo. Assign someone to the 8 overdue support tickets. And look at your starter-to-paid upgrade flow — churn is happening because people aren\'t finding value fast enough.',sources:['HubSpot','Intercom','Stripe'],card:'focus_nw'},
+      customers:{answer:'Two customers need immediate attention. <span class="r">Forma Design</span> submitted 3 support tickets in 4 days — all unresolved. They\'re at risk of churning before their renewal in 6 weeks. <span class="y">Stackd Co</span> hasn\'t logged in for 18 days.',sources:['Intercom','Stripe'],card:'customers_nw'},
+    },
+  },
+  vantage: {
+    name: 'Vantage Consulting',
+    loadingSteps: ['Authenticating HubSpot...','Syncing Harvest timesheets...','Reading QuickBooks data...','Mapping engagement health...','Intelligence layer ready.'],
+    chips: [
+      {label:'Which engagement is most at risk?',key:'engagements'},
+      {label:"What's our pipeline looking like?",key:'pipeline'},
+      {label:'How is team utilization?',key:'team'},
+      {label:'What should I focus on this week?',key:'focus'},
+      {label:"What's our revenue forecast?",key:'revenue'},
+    ],
+    answers: {
+      engagements:{answer:'<span class="r">Meridian Partners</span> is the most at risk. Their engagement ends in 6 weeks, no renewal conversation has been initiated, and your last senior touchpoint was 3 weeks ago. Call the decision maker today — not your usual contact.',sources:['HubSpot','Harvest','Gmail'],card:'engagements_v'},
+      pipeline:{answer:'Two proposals have been sitting unanswered for over 2 weeks. <span class="y">Axle Ventures</span> — $45,000 project, last contact 14 days ago. <span class="y">Crestline Group</span> — $32,000 retainer, they asked for the proposal and then went silent.',sources:['HubSpot'],card:'pipeline_v'},
+      team:{answer:'Billable utilization is at <span class="y">78% — below your 85% target</span>. <span class="r">Alex M. is overallocated at 112%</span> across three simultaneous engagements — that\'s a quality risk. You need to rebalance this week.',sources:['Harvest'],card:'team_v'},
+      focus:{answer:'Three things this week. Call the Meridian Partners decision maker today. Follow up on both stale proposals before they go cold. And rebalance Alex M.\'s project load — 112% utilization across three clients is how mistakes get made.',sources:['HubSpot','Harvest','Gmail'],card:'focus_v'},
+      revenue:{answer:'Current monthly revenue is <strong>$165,000</strong> across 6 active engagements. If Meridian Partners doesn\'t renew, you lose <span class="r">$28,000/month starting in 6 weeks</span>. If both proposals close, you add $77,000 in new project revenue.',sources:['QuickBooks','HubSpot'],card:'revenue_v'},
+    },
+  },
+  folio: {
+    name: 'Folio',
+    loadingSteps: ['Authenticating Shopify...','Syncing Triple Whale data...','Reading Klaviyo flows...','Mapping subscription health...','Intelligence layer ready.'],
+    chips: [
+      {label:"What's happening with our ROAS?",key:'roas'},
+      {label:'How is subscription health?',key:'subscriptions'},
+      {label:'Any inventory risks?',key:'inventory'},
+      {label:'What should I focus on this week?',key:'focus'},
+      {label:"What's our revenue trend?",key:'revenue'},
+    ],
+    answers: {
+      roas:{answer:'Meta ROAS is <span class="r">down 18% — now at 1.8x</span>, your worst month in 6. The drop correlates with your creative refresh — new UGC ads are underperforming the old testimonial format by 2.3x. Your best-performing ad is still sitting in the library. Reactivate it.',sources:['Triple Whale','Klaviyo'],card:'roas_f'},
+      subscriptions:{answer:'Subscription churn is <span class="r">at 6.2% — up from 4.1% last month</span>. Single-product subscribers churn at 3x the rate of bundle subscribers. Most cancellations happen between days 45–60. You don\'t have a retention email going out at day 40.',sources:['Recharge','Klaviyo'],card:'subscriptions_f'},
+      inventory:{answer:'<span class="r">Your Clarity Serum — best-selling SKU — has 12 days of inventory left.</span> At current sell-through rate you\'ll be out of stock on May 17. Your supplier lead time is 21 days. Place the order today.',sources:['Shopify'],card:'inventory_f'},
+      focus:{answer:'Three things today. Reorder Clarity Serum immediately — 12 days left, 21-day lead time. Reactivate your top testimonial ad — ROAS is bleeding. Set up a day-40 retention email for single-product subscribers.',sources:['Shopify','Triple Whale','Klaviyo','Recharge'],card:'focus_f'},
+      revenue:{answer:'Monthly revenue is <strong>$310,000</strong> — <span class="y">down 6% from last month</span>. The decline is from lower ad-driven acquisition and higher subscription churn. Subscription revenue is $84,000/month — protecting it protects the floor.',sources:['Shopify','Recharge','Triple Whale'],card:'revenue_f'},
+    },
+  },
+};
+
+const floatCards = {
+  clients_fw:{title:'Client Health',tag:'5 clients',html:`<div class="fc-cl"><div class="fc-cl-dot" style="background:var(--green)"></div><span class="fc-cl-name">TechFlow Inc</span><span class="fc-cl-status" style="color:var(--green)">Healthy</span></div><div class="fc-cl"><div class="fc-cl-dot" style="background:var(--green)"></div><span class="fc-cl-name">Luna Brands</span><span class="fc-cl-status" style="color:var(--green)">Healthy</span></div><div class="fc-cl"><div class="fc-cl-dot" style="background:var(--yellow)"></div><span class="fc-cl-name">Veritas Co</span><span class="fc-cl-status" style="color:var(--yellow)">Watch</span></div><div class="fc-cl"><div class="fc-cl-dot" style="background:var(--red)"></div><span class="fc-cl-name">Acme Corp</span><span class="fc-cl-status" style="color:var(--red)">At risk</span></div><div class="fc-cl"><div class="fc-cl-dot" style="background:var(--red)"></div><span class="fc-cl-name">Bright Co</span><span class="fc-cl-status" style="color:var(--red)">At risk</span></div>`},
+  mrr_fw:{title:'MRR Trend',tag:'6 months',html:`<div class="fc-met"><span class="fc-met-lbl">MRR</span><span class="fc-met-val">$112,400<span class="fc-met-trend" style="color:var(--green)"> ↑4.2%</span></span></div><div class="fc-met"><span class="fc-met-lbl">New revenue</span><span class="fc-met-val">$16,200</span></div><div class="fc-met"><span class="fc-met-lbl">Churn risk</span><span class="fc-met-val" style="color:var(--red)">$14,000</span></div><svg style="width:100%;height:44px" viewBox="0 0 200 44" fill="none"><path d="M0,38 C40,34 80,28 120,20 C160,12 180,8 200,4" stroke="var(--green)" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="200" cy="4" r="3" fill="var(--green)"/></svg>`},
+  pipeline_fw:{title:'Stalled Deals',tag:'3 deals · $52k',html:`<div class="fc-deal"><div class="fc-deal-name">Meridian Group</div><div class="fc-deal-meta"><span class="fc-deal-val">$18,000</span><span style="color:var(--yellow);font-size:10px">16d silent</span></div></div><div class="fc-deal"><div class="fc-deal-name">Axle Studio</div><div class="fc-deal-meta"><span class="fc-deal-val">$12,000</span><span style="color:var(--yellow);font-size:10px">No reply</span></div></div><div class="fc-deal"><div class="fc-deal-name">Forma Co</div><div class="fc-deal-meta"><span class="fc-deal-val">$22,000</span><span style="color:var(--red);font-size:10px">21d silent</span></div></div>`},
+  focus_fw:{title:"This week's priorities",tag:'3 actions',html:`<div class="fc-pri"><span class="fc-pri-num">1</span><span class="fc-pri-text">Call Acme Corp today — invoice overdue, emails ignored</span></div><div class="fc-pri"><span class="fc-pri-num">2</span><span class="fc-pri-text">Push on $52k in stalled pipeline this week</span></div><div class="fc-pri"><span class="fc-pri-num">3</span><span class="fc-pri-text">Find who is overloaded — 2 projects behind</span></div>`},
+  team_fw:{title:'Team Utilization',tag:'Avg 94%',html:`<div class="fc-tm"><div class="fc-tm-av">JR</div><span class="fc-tm-name">James R.</span><div class="fc-tm-bar-w"><div class="fc-tm-bar-f" style="width:98%;background:var(--red)"></div></div><span class="fc-tm-val" style="color:var(--red)">98%</span></div><div class="fc-tm"><div class="fc-tm-av">SK</div><span class="fc-tm-name">Sara K.</span><div class="fc-tm-bar-w"><div class="fc-tm-bar-f" style="width:88%;background:var(--yellow)"></div></div><span class="fc-tm-val" style="color:var(--yellow)">88%</span></div><div class="fc-tm"><div class="fc-tm-av">MP</div><span class="fc-tm-name">Mike P.</span><div class="fc-tm-bar-w"><div class="fc-tm-bar-f" style="width:72%;background:var(--border2)"></div></div><span class="fc-tm-val">72%</span></div><div class="fc-tm"><div class="fc-tm-av">AL</div><span class="fc-tm-name">Amy L.</span><div class="fc-tm-bar-w"><div class="fc-tm-bar-f" style="width:65%;background:var(--border2)"></div></div><span class="fc-tm-val">65%</span></div>`},
+  churn_nw:{title:'Churn Analysis',tag:'This month',html:`<div class="fc-met"><span class="fc-met-lbl">Churn rate</span><span class="fc-met-val" style="color:var(--red)">4.8%<span class="fc-met-trend" style="color:var(--red)"> ↑2%</span></span></div><div class="fc-met"><span class="fc-met-lbl">Lost this month</span><span class="fc-met-val">18 subscribers</span></div><div class="fc-met"><span class="fc-met-lbl">Revenue lost</span><span class="fc-met-val" style="color:var(--red)">$7,800</span></div><div class="fc-met"><span class="fc-met-lbl">Primary segment</span><span class="fc-met-val">Starter plan</span></div>`},
+  pipeline_nw:{title:'Enterprise Pipeline',tag:'3 deals · $86k',html:`<div class="fc-deal"><div class="fc-deal-name">Apex Ventures</div><div class="fc-deal-meta"><span class="fc-deal-val">$36k ARR</span><span style="color:var(--green);font-size:10px">Contract sent</span></div></div><div class="fc-deal"><div class="fc-deal-name">Bluebird Labs</div><div class="fc-deal-meta"><span class="fc-deal-val">$28k ARR</span><span style="color:var(--yellow);font-size:10px">CFO sign-off</span></div></div><div class="fc-deal"><div class="fc-deal-name">Crestholm</div><div class="fc-deal-meta"><span class="fc-deal-val">$22k ARR</span><span style="color:var(--red);font-size:10px">Gone quiet</span></div></div>`},
+  mrr_nw:{title:'MRR Snapshot',tag:'This month',html:`<div class="fc-met"><span class="fc-met-lbl">MRR</span><span class="fc-met-val">$84,200<span class="fc-met-trend" style="color:var(--yellow)"> flat</span></span></div><div class="fc-met"><span class="fc-met-lbl">New MRR</span><span class="fc-met-val" style="color:var(--green)">$8,400</span></div><div class="fc-met"><span class="fc-met-lbl">Churned MRR</span><span class="fc-met-val" style="color:var(--red)">$7,800</span></div><div class="fc-met"><span class="fc-met-lbl">Net new</span><span class="fc-met-val" style="color:var(--yellow)">$600</span></div>`},
+  focus_nw:{title:"This week's priorities",tag:'3 actions',html:`<div class="fc-pri"><span class="fc-pri-num">1</span><span class="fc-pri-text">Follow up with Crestholm today</span></div><div class="fc-pri"><span class="fc-pri-num">2</span><span class="fc-pri-text">Resolve 8 overdue support tickets</span></div><div class="fc-pri"><span class="fc-pri-num">3</span><span class="fc-pri-text">Audit starter-to-paid upgrade flow</span></div>`},
+  customers_nw:{title:'At-Risk Customers',tag:'2 flagged',html:`<div class="fc-deal"><div class="fc-deal-name">Forma Design</div><div class="fc-deal-meta"><span class="fc-deal-val">3 open tickets</span><span style="color:var(--red);font-size:10px">Renewal 6wk</span></div></div><div class="fc-deal"><div class="fc-deal-name">Stackd Co</div><div class="fc-deal-meta"><span class="fc-deal-val">$420/mo</span><span style="color:var(--yellow);font-size:10px">18d no login</span></div></div>`},
+  engagements_v:{title:'Engagement Health',tag:'6 active',html:`<div class="fc-cl"><div class="fc-cl-dot" style="background:var(--green)"></div><span class="fc-cl-name">Apex Fund</span><span class="fc-cl-status" style="color:var(--green)">Strong</span></div><div class="fc-cl"><div class="fc-cl-dot" style="background:var(--green)"></div><span class="fc-cl-name">Bluewave Cap</span><span class="fc-cl-status" style="color:var(--green)">Strong</span></div><div class="fc-cl"><div class="fc-cl-dot" style="background:var(--yellow)"></div><span class="fc-cl-name">Forma Group</span><span class="fc-cl-status" style="color:var(--yellow)">Watch</span></div><div class="fc-cl"><div class="fc-cl-dot" style="background:var(--red)"></div><span class="fc-cl-name">Meridian Partners</span><span class="fc-cl-status" style="color:var(--red)">At risk</span></div>`},
+  pipeline_v:{title:'Stale Proposals',tag:'2 · $77k',html:`<div class="fc-deal"><div class="fc-deal-name">Axle Ventures</div><div class="fc-deal-meta"><span class="fc-deal-val">$45,000</span><span style="color:var(--yellow);font-size:10px">14d no reply</span></div></div><div class="fc-deal"><div class="fc-deal-name">Crestline Group</div><div class="fc-deal-meta"><span class="fc-deal-val">$32,000</span><span style="color:var(--red);font-size:10px">Went silent</span></div></div>`},
+  team_v:{title:'Billable Utilization',tag:'Avg 78%',html:`<div class="fc-tm"><div class="fc-tm-av">AM</div><span class="fc-tm-name">Alex M.</span><div class="fc-tm-bar-w"><div class="fc-tm-bar-f" style="width:100%;background:var(--red)"></div></div><span class="fc-tm-val" style="color:var(--red)">112%</span></div><div class="fc-tm"><div class="fc-tm-av">JL</div><span class="fc-tm-name">Jamie L.</span><div class="fc-tm-bar-w"><div class="fc-tm-bar-f" style="width:85%;background:var(--green)"></div></div><span class="fc-tm-val">85%</span></div><div class="fc-tm"><div class="fc-tm-av">SR</div><span class="fc-tm-name">Sam R.</span><div class="fc-tm-bar-w"><div class="fc-tm-bar-f" style="width:64%;background:var(--border2)"></div></div><span class="fc-tm-val">64%</span></div>`},
+  focus_v:{title:"This week's priorities",tag:'3 actions',html:`<div class="fc-pri"><span class="fc-pri-num">1</span><span class="fc-pri-text">Call Meridian Partners decision maker today</span></div><div class="fc-pri"><span class="fc-pri-num">2</span><span class="fc-pri-text">Follow up on both stale proposals</span></div><div class="fc-pri"><span class="fc-pri-num">3</span><span class="fc-pri-text">Rebalance Alex M.'s load — 112% is a risk</span></div>`},
+  revenue_v:{title:'Revenue Forecast',tag:'Q3 range',html:`<div class="fc-met"><span class="fc-met-lbl">Current monthly</span><span class="fc-met-val">$165,000</span></div><div class="fc-met"><span class="fc-met-lbl">If Meridian churns</span><span class="fc-met-val" style="color:var(--red)">$137k/mo</span></div><div class="fc-met"><span class="fc-met-lbl">If proposals close</span><span class="fc-met-val" style="color:var(--green)">$242k/mo</span></div>`},
+  roas_f:{title:'Ad Performance',tag:'Meta · This month',html:`<div class="fc-met"><span class="fc-met-lbl">ROAS</span><span class="fc-met-val" style="color:var(--red)">1.8x<span class="fc-met-trend" style="color:var(--red)"> ↓18%</span></span></div><div class="fc-met"><span class="fc-met-lbl">Best ad (old)</span><span class="fc-met-val" style="color:var(--green)">4.1x ROAS</span></div><div class="fc-met"><span class="fc-met-lbl">New UGC ads</span><span class="fc-met-val" style="color:var(--red)">1.8x ROAS</span></div>`},
+  subscriptions_f:{title:'Subscription Health',tag:'Recharge',html:`<div class="fc-met"><span class="fc-met-lbl">Churn rate</span><span class="fc-met-val" style="color:var(--red)">6.2%<span class="fc-met-trend" style="color:var(--red)"> ↑2.1%</span></span></div><div class="fc-met"><span class="fc-met-lbl">Bundle churn</span><span class="fc-met-val" style="color:var(--green)">1.8%</span></div><div class="fc-met"><span class="fc-met-lbl">Single-product</span><span class="fc-met-val" style="color:var(--red)">5.4%</span></div><div class="fc-met"><span class="fc-met-lbl">Drop-off day</span><span class="fc-met-val">Days 45–60</span></div>`},
+  inventory_f:{title:'Inventory Alert',tag:'⚠ Act now',html:`<div class="fc-deal"><div class="fc-deal-name">Clarity Serum — Best Seller</div><div class="fc-deal-meta"><span class="fc-deal-val" style="color:var(--red)">12 days left</span><span style="color:var(--red);font-size:10px">Reorder NOW</span></div></div><div class="fc-deal"><div class="fc-deal-name">Glow Moisturizer</div><div class="fc-deal-meta"><span class="fc-deal-val">38 days left</span><span style="color:var(--green);font-size:10px">OK</span></div></div><div class="fc-deal"><div class="fc-deal-name">Vitamin C Serum</div><div class="fc-deal-meta"><span class="fc-deal-val">24 days left</span><span style="color:var(--yellow);font-size:10px">Watch</span></div></div>`},
+  focus_f:{title:"Today's priorities",tag:'3 urgent',html:`<div class="fc-pri"><span class="fc-pri-num">1</span><span class="fc-pri-text">Reorder Clarity Serum — 12d left, 21d lead time</span></div><div class="fc-pri"><span class="fc-pri-num">2</span><span class="fc-pri-text">Reactivate top testimonial ad — ROAS bleeding</span></div><div class="fc-pri"><span class="fc-pri-num">3</span><span class="fc-pri-text">Add day-40 retention email for single subscribers</span></div>`},
+  revenue_f:{title:'Revenue Snapshot',tag:'This month',html:`<div class="fc-met"><span class="fc-met-lbl">Total revenue</span><span class="fc-met-val">$310,000<span class="fc-met-trend" style="color:var(--yellow)"> ↓6%</span></span></div><div class="fc-met"><span class="fc-met-lbl">Subscription</span><span class="fc-met-val">$84,000</span></div><div class="fc-met"><span class="fc-met-lbl">One-time</span><span class="fc-met-val">$226,000</span></div>`},
+};
+
+// ═══════════════════════════════
+// STATE
+// ═══════════════════════════════
+let currentCompany = null;
+let currentMode = 'overview';
+
+// ═══════════════════════════════
+// SCREENS
+// ═══════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function selectCompany(key) {
+  currentCompany = key;
+  const co = companies[key];
+  showScreen('load-screen');
+  document.getElementById('load-company').textContent = `Connecting ${co.name}...`;
+
+  const bar = document.getElementById('load-bar');
+  const status = document.getElementById('load-status');
+  let progress = 0, stepIdx = 0;
+
+  const iv = setInterval(() => {
+    progress += 2;
+    bar.style.width = progress + '%';
+    if (stepIdx < co.loadingSteps.length && progress >= (stepIdx+1)*20) {
+      status.textContent = co.loadingSteps[stepIdx++];
+    }
+    if (progress >= 100) {
+      clearInterval(iv);
+      setTimeout(() => launchApp(co), 300);
+    }
+  }, 20);
+}
+
+function launchApp(co) {
+  document.getElementById('app-company-label').textContent = co.name;
+  document.getElementById('term-empty-sub').textContent = `Ask anything about ${co.name}.`;
+  populateChips(co);
+  resetAskState();
+  switchMode('overview');
+  showScreen('app-screen');
+}
+
+function goBack() {
+  showScreen('sel-screen');
+  document.getElementById('load-bar').style.width = '0%';
+  currentCompany = null;
+}
+
+// ═══════════════════════════════
+// MODE SWITCHING
+// ═══════════════════════════════
+function switchMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+  document.querySelectorAll('.mode-panel').forEach(p => p.classList.toggle('active', p.id === 'mode-' + mode));
+}
+
+// ═══════════════════════════════
+// ASK MODE
+// ═══════════════════════════════
+function populateChips(co) {
+  const el = document.getElementById('term-chips');
+  el.innerHTML = '';
+  co.chips.forEach(chip => {
+    const btn = document.createElement('button');
+    btn.className = 'term-chip';
+    btn.textContent = chip.label;
+    btn.onclick = () => {
+      document.querySelectorAll('.term-chip').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      showAnswer(chip.key);
+    };
+    el.appendChild(btn);
+  });
+}
+
+function resetAskState() {
+  document.getElementById('term-empty').style.display = 'flex';
+  document.getElementById('term-typing').style.display = 'none';
+  document.getElementById('term-question').style.display = 'none';
+  document.getElementById('term-answer').style.display = 'none';
+  document.getElementById('term-sources').style.display = 'none';
+  document.getElementById('float-card').style.display = 'none';
+  document.getElementById('term-input').value = '';
+}
+
+function showAnswer(key) {
+  const co = companies[currentCompany];
+  const data = co.answers[key];
+  if (!data) return;
+
+  const chip = co.chips.find(c => c.key === key);
+  const question = chip ? chip.label : key;
+
+  document.getElementById('term-empty').style.display = 'none';
+  document.getElementById('term-typing').style.display = 'none';
+  document.getElementById('term-answer').style.display = 'none';
+  document.getElementById('term-sources').style.display = 'none';
+  document.getElementById('float-card').style.display = 'none';
+
+  const qEl = document.getElementById('term-question');
+  qEl.textContent = question;
+  qEl.style.display = 'inline-flex';
+  qEl.style.animation = 'none'; qEl.offsetHeight; qEl.style.animation = '';
+
+  setTimeout(() => {
+    document.getElementById('term-typing').style.display = 'flex';
+    setTimeout(() => {
+      document.getElementById('term-typing').style.display = 'none';
+
+      const ansEl = document.getElementById('term-answer');
+      ansEl.innerHTML = data.answer;
+      ansEl.style.display = 'block';
+      ansEl.style.animation = 'none'; ansEl.offsetHeight; ansEl.style.animation = 'fadeIn .4s ease both';
+
+      const srcEl = document.getElementById('term-sources');
+      srcEl.innerHTML = data.sources.map(s => `<div class="term-source"><div class="term-source-dot"></div>${s}</div>`).join('');
+      srcEl.style.display = 'flex';
+      srcEl.style.animation = 'none'; srcEl.offsetHeight; srcEl.style.animation = 'fadeIn .4s .1s ease both';
+
+      if (data.card && floatCards[data.card]) {
+        const fc = floatCards[data.card];
+        document.getElementById('fc-title').textContent = fc.title;
+        document.getElementById('fc-tag').textContent = fc.tag;
+        document.getElementById('fc-body').innerHTML = fc.html;
+        const fcEl = document.getElementById('float-card');
+        fcEl.style.display = 'block';
+        fcEl.style.animation = 'none'; fcEl.offsetHeight; fcEl.style.animation = 'fadeInRight .3s ease both';
+      }
+    }, 900);
+  }, 200);
+}
+
+function askQuestion() {
+  const input = document.getElementById('term-input');
+  const q = input.value.trim();
+  if (!q) return;
+
+  const co = companies[currentCompany];
+  const lq = q.toLowerCase();
+  let matchedKey = null;
+  for (const chip of co.chips) {
+    if (lq.includes(chip.key) || chip.label.toLowerCase().split(' ').some(w => lq.includes(w) && w.length > 3)) {
+      matchedKey = chip.key; break;
+    }
+  }
+
+  document.querySelectorAll('.term-chip').forEach(c => c.classList.remove('active'));
+
+  if (matchedKey) {
+    showAnswer(matchedKey);
+  } else {
+    document.getElementById('term-empty').style.display = 'none';
+    document.getElementById('term-typing').style.display = 'none';
+    document.getElementById('term-answer').style.display = 'none';
+    document.getElementById('term-sources').style.display = 'none';
+    document.getElementById('float-card').style.display = 'none';
+
+    const qEl = document.getElementById('term-question');
+    qEl.textContent = q; qEl.style.display = 'inline-flex';
+
+    setTimeout(() => {
+      document.getElementById('term-typing').style.display = 'flex';
+      setTimeout(() => {
+        document.getElementById('term-typing').style.display = 'none';
+        const ansEl = document.getElementById('term-answer');
+        ansEl.innerHTML = `In a live Calar instance connected to ${co.name}'s actual tools, I'd pull the relevant data and give you a precise answer sourced from your real numbers. Try one of the suggested questions to see exactly how this works.`;
+        ansEl.style.display = 'block';
+        ansEl.style.animation = 'none'; ansEl.offsetHeight; ansEl.style.animation = 'fadeIn .4s ease both';
+      }, 1200);
+    }, 200);
+  }
+  input.value = '';
+}
+
+function handleKey(e) { if (e.key === 'Enter') askQuestion(); }
+</script>
+</body>
+</html>
