@@ -566,127 +566,8 @@
 
   <!-- ══ OVERVIEW MODE ══ -->
   <div id="mode-overview" class="mode-panel active">
-    <div id="mode-overview" style="overflow-y:auto;flex:1">
     <div style="overflow-y:auto;flex:1" id="ov-scroll">
-    <div class="overview-inner">
-      <div class="ov-header">
-        <div class="ov-header-left">
-          <div class="ov-eyebrow">Week 18 · Monday morning</div>
-          <div class="ov-title" id="ov-greeting">Good morning. Here's what's happening.</div>
-        </div>
-        <div class="ov-health">
-          <div class="health-ring-wrap">
-            <svg viewBox="0 0 40 40"><circle class="hring-bg" cx="20" cy="20" r="17"/><circle class="hring-fill" cx="20" cy="20" r="17"/></svg>
-            <div class="hring-num">72</div>
-          </div>
-          <div><div class="ov-health-text-label">Business health</div><div class="ov-health-text-status">3 risks flagged</div></div>
-        </div>
-      </div>
-
-      <div class="newspaper">
-        <!-- Alert -->
-        <div class="card card-alert-banner">
-          <div class="alert-dot"></div>
-          <div class="alert-text-w"><div class="alert-ttl"><span class="r">Acme Corp</span> — invoice overdue · $14,000 · 18 days · no response</div><div class="alert-dsc">Three emails sent. No reply. This is your biggest at-risk account. A phone call today is non-negotiable.</div></div>
-          <div class="alert-acts"><button class="alert-btn-p">Call now</button><button class="alert-btn-s">Snooze</button></div>
-        </div>
-        <!-- Revenue -->
-        <div class="card card-revenue">
-          <div class="card-header"><span class="card-title">Monthly Recurring Revenue</span><span class="card-action">6 months →</span></div>
-          <div class="card-body">
-            <div class="rev-main"><span class="rev-num">$112,400</span><span class="rev-trend">↑ 4.2%</span></div>
-            <div class="rev-sub">vs $107,870 last month · 2 new retainers closed</div>
-            <svg class="spark-svg" viewBox="0 0 400 56" fill="none" preserveAspectRatio="none"><path d="M0,50 C60,46 100,42 160,34 C220,26 280,18 340,10 C360,8 380,6 400,3" stroke="var(--green)" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="400" cy="3" r="3" fill="var(--green)"/></svg>
-            <div class="spark-labels"><span class="spark-lbl">Nov</span><span class="spark-lbl">Dec</span><span class="spark-lbl">Jan</span><span class="spark-lbl">Feb</span><span class="spark-lbl">Mar</span><span class="spark-lbl">Apr</span></div>
-            <div class="rev-grid">
-              <div class="rev-cell"><div class="rev-cell-lbl">New MRR</div><div class="rev-cell-val">$16,200</div><div class="rev-cell-sub" style="color:var(--green)">↑ 2 new clients</div></div>
-              <div class="rev-cell"><div class="rev-cell-lbl">Churn risk</div><div class="rev-cell-val" style="color:var(--red)">$14,000</div><div class="rev-cell-sub" style="color:var(--red)">Acme Corp</div></div>
-              <div class="rev-cell"><div class="rev-cell-lbl">Pipeline</div><div class="rev-cell-val">$48,000</div><div class="rev-cell-sub" style="color:var(--yellow)">3 stalled</div></div>
-              <div class="rev-cell"><div class="rev-cell-lbl">Goal</div><div class="rev-cell-val">74%</div><div class="rev-cell-sub" style="color:var(--yellow)">$130k target</div></div>
-            </div>
-          </div>
-        </div>
-        <!-- Health -->
-        <div class="card card-health-b">
-          <div class="card-header"><span class="card-title">Health Breakdown</span></div>
-          <div class="card-body">
-            <div class="hbig">72</div>
-            <div class="hbig-sub">out of 100 · 3 risks flagged</div>
-            <div class="hbar"><div class="hbar-top"><span class="hbar-name">Revenue</span><span class="hbar-val" style="color:var(--green)">84</span></div><div class="hbar-track"><div class="hbar-fill" style="width:84%;background:var(--green)"></div></div></div>
-            <div class="hbar"><div class="hbar-top"><span class="hbar-name">Clients</span><span class="hbar-val" style="color:var(--yellow)">61</span></div><div class="hbar-track"><div class="hbar-fill" style="width:61%;background:var(--yellow)"></div></div></div>
-            <div class="hbar"><div class="hbar-top"><span class="hbar-name">Pipeline</span><span class="hbar-val" style="color:var(--yellow)">58</span></div><div class="hbar-track"><div class="hbar-fill" style="width:58%;background:var(--yellow)"></div></div></div>
-            <div class="hbar"><div class="hbar-top"><span class="hbar-name">Team</span><span class="hbar-val" style="color:var(--red)">48</span></div><div class="hbar-track"><div class="hbar-fill" style="width:48%;background:var(--red)"></div></div></div>
-            <div class="hbar"><div class="hbar-top"><span class="hbar-name">Cash flow</span><span class="hbar-val" style="color:var(--green)">78</span></div><div class="hbar-track"><div class="hbar-fill" style="width:78%;background:var(--green)"></div></div></div>
-          </div>
-        </div>
-        <!-- Signals -->
-        <div class="card card-signals">
-          <div class="card-header"><span class="card-title">Key Signals</span><span class="card-meta">Live</span></div>
-          <div class="card-body">
-            <div class="sig-item"><div class="sig-dot" style="background:var(--green)"></div><span class="sig-label">Active clients</span><span class="sig-val">14<span class="sig-trend" style="color:var(--green)"> +2</span></span></div>
-            <div class="sig-item"><div class="sig-dot" style="background:var(--red)"></div><span class="sig-label">At-risk clients</span><span class="sig-val">3<span class="sig-trend" style="color:var(--red)"> ↑</span></span></div>
-            <div class="sig-item"><div class="sig-dot" style="background:var(--yellow)"></div><span class="sig-label">Projects behind</span><span class="sig-val">2</span></div>
-            <div class="sig-item"><div class="sig-dot" style="background:var(--yellow)"></div><span class="sig-label">Team utilization</span><span class="sig-val">94%</span></div>
-            <div class="sig-item"><div class="sig-dot" style="background:var(--red)"></div><span class="sig-label">Overdue invoices</span><span class="sig-val" style="color:var(--red)">$14k</span></div>
-            <div class="sig-item"><div class="sig-dot" style="background:var(--yellow)"></div><span class="sig-label">Stalled deals</span><span class="sig-val">3<span class="sig-trend" style="color:var(--yellow)"> $48k</span></span></div>
-          </div>
-        </div>
-        <!-- Clients -->
-        <div class="card card-clients">
-          <div class="card-header"><span class="card-title">Client Health · 14 active</span><span class="card-action">View all →</span></div>
-          <div class="card-body">
-            <div class="cl-row"><div class="cl-dot" style="background:var(--green)"></div><span class="cl-name">TechFlow Inc</span><span class="cl-mrr">$18,000</span><span class="cl-last">Active 2d ago</span><span class="cl-badge" style="background:rgba(34,197,94,0.08);color:var(--green)">Healthy</span></div>
-            <div class="cl-row"><div class="cl-dot" style="background:var(--green)"></div><span class="cl-name">Luna Brands</span><span class="cl-mrr">$12,000</span><span class="cl-last">Active today</span><span class="cl-badge" style="background:rgba(34,197,94,0.08);color:var(--green)">Healthy</span></div>
-            <div class="cl-row"><div class="cl-dot" style="background:var(--green)"></div><span class="cl-name">Mosaic Studio</span><span class="cl-mrr">$9,000</span><span class="cl-last">Active 1d ago</span><span class="cl-badge" style="background:rgba(34,197,94,0.08);color:var(--green)">Healthy</span></div>
-            <div class="cl-row"><div class="cl-dot" style="background:var(--yellow)"></div><span class="cl-name">Veritas Co</span><span class="cl-mrr">$11,000</span><span class="cl-last">3 tickets open</span><span class="cl-badge" style="background:rgba(245,158,11,0.08);color:var(--yellow)">Watch</span></div>
-            <div class="cl-row"><div class="cl-dot" style="background:var(--red)"></div><span class="cl-name">Acme Corp</span><span class="cl-mrr">$14,000</span><span class="cl-last">18d silent</span><span class="cl-badge" style="background:rgba(239,68,68,0.08);color:var(--red)">At risk</span></div>
-            <div class="cl-row"><div class="cl-dot" style="background:var(--red)"></div><span class="cl-name">Bright Co</span><span class="cl-mrr">$8,000</span><span class="cl-last">Eng. ↓60%</span><span class="cl-badge" style="background:rgba(239,68,68,0.08);color:var(--red)">At risk</span></div>
-          </div>
-        </div>
-        <!-- Pipeline -->
-        <div class="card card-pipeline">
-          <div class="card-header"><span class="card-title">Pipeline · $48,000</span><span class="card-action">View all →</span></div>
-          <div class="card-body">
-            <div class="pipe-head"><span>Deal</span><span style="text-align:right">Value</span><span style="text-align:right">Last contact</span><span style="text-align:right">Stage</span></div>
-            <div class="deal-row"><div><div class="deal-name">Meridian Group</div><div class="deal-co">Marketing</div></div><div class="deal-val">$18k</div><div class="deal-days" style="color:var(--yellow)">16 days ago</div><div class="deal-badge" style="background:rgba(245,158,11,0.08);color:var(--yellow)">Proposal</div></div>
-            <div class="deal-row"><div><div class="deal-name">Axle Studio</div><div class="deal-co">Design</div></div><div class="deal-val">$12k</div><div class="deal-days" style="color:var(--yellow)">No reply</div><div class="deal-badge" style="background:rgba(245,158,11,0.08);color:var(--yellow)">Proposal</div></div>
-            <div class="deal-row"><div><div class="deal-name">Forma Co</div><div class="deal-co">E-commerce</div></div><div class="deal-val">$22k</div><div class="deal-days" style="color:var(--red)">21 days ago</div><div class="deal-badge" style="background:rgba(239,68,68,0.08);color:var(--red)">Cold</div></div>
-            <div class="deal-row"><div><div class="deal-name">Bluewave Inc</div><div class="deal-co">SaaS</div></div><div class="deal-val">$9k</div><div class="deal-days" style="color:var(--green)">Yesterday</div><div class="deal-badge" style="background:rgba(34,197,94,0.08);color:var(--green)">Discovery</div></div>
-          </div>
-        </div>
-        <!-- Team -->
-        <div class="card card-team">
-          <div class="card-header"><span class="card-title">Team · Avg 94%</span><span class="card-action">View all →</span></div>
-          <div class="card-body">
-            <div class="tm-row"><div class="tm-av">JR</div><div class="tm-info"><div class="tm-name">James R.</div><div class="tm-role">Designer · 4 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:98%;background:var(--red)"></div></div><div class="tm-util" style="color:var(--red)">98%</div></div></div>
-            <div class="tm-row"><div class="tm-av">SK</div><div class="tm-info"><div class="tm-name">Sara K.</div><div class="tm-role">Copywriter · 3 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:88%;background:var(--yellow)"></div></div><div class="tm-util" style="color:var(--yellow)">88%</div></div></div>
-            <div class="tm-row"><div class="tm-av">MP</div><div class="tm-info"><div class="tm-name">Mike P.</div><div class="tm-role">Strategist · 2 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:72%;background:var(--border2)"></div></div><div class="tm-util">72%</div></div></div>
-            <div class="tm-row"><div class="tm-av">AL</div><div class="tm-info"><div class="tm-name">Amy L.</div><div class="tm-role">Account Mgr · 2 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:65%;background:var(--border2)"></div></div><div class="tm-util">65%</div></div></div>
-          </div>
-        </div>
-        <!-- Activity -->
-        <div class="card card-activity">
-          <div class="card-header"><span class="card-title">Activity Feed</span><span class="card-meta">Live</span></div>
-          <div class="card-body">
-            <div class="act-item"><div class="act-left"><div class="act-dot" style="background:var(--red)"></div><div class="act-line"></div></div><div><div class="act-text"><strong>Acme Corp</strong> invoice overdue — no response to 3 emails</div><div class="act-time">18 days · $14,000 <span class="act-tool">Stripe</span></div></div></div>
-            <div class="act-item"><div class="act-left"><div class="act-dot" style="background:var(--yellow)"></div><div class="act-line"></div></div><div><div class="act-text"><strong>Veritas Co</strong> submitted 3rd support ticket this week</div><div class="act-time">2 hours ago <span class="act-tool">Slack</span></div></div></div>
-            <div class="act-item"><div class="act-left"><div class="act-dot" style="background:var(--green)"></div><div class="act-line"></div></div><div><div class="act-text"><strong>Luna Brands</strong> renewed retainer — $12,000/month</div><div class="act-time">Today · 9:14 AM <span class="act-tool">Stripe</span></div></div></div>
-            <div class="act-item"><div class="act-left"><div class="act-dot" style="background:var(--yellow)"></div><div class="act-line"></div></div><div><div class="act-text"><strong>Forma Co</strong> deal — 21 days without contact</div><div class="act-time">Yesterday <span class="act-tool">HubSpot</span></div></div></div>
-            <div class="act-item"><div class="act-left"><div class="act-dot" style="background:var(--green)"></div><div class="act-line"></div></div><div><div class="act-text"><strong>TechFlow Inc</strong> milestone delivered on time</div><div class="act-time">Yesterday · 4:30 PM <span class="act-tool">Linear</span></div></div></div>
-          </div>
-        </div>
-        <!-- Weekly Signal -->
-        <div class="card card-wsig">
-          <div class="card-header"><span class="card-title">Weekly Signal</span><span class="card-action">Archive →</span></div>
-          <div class="card-body">
-            <div class="wsig-date">Monday, May 5 · Week 18</div>
-            <p class="wsig-para">Revenue is <span class="g">up 4.2%</span> — two new retainers closed. But <span class="r">Acme Corp</span> hasn't responded in 18 days. That's your call today.</p>
-            <p class="wsig-para">You have <strong>$48,000</strong> in pipeline going cold. Push this week.</p>
-            <div class="wsig-action"><strong>Focus:</strong> Acme call today. Pipeline push by Thursday. Find who's overloaded.</div>
-            <div class="wsig-more">Read full briefing <span>→</span></div>
-          </div>
-        </div>
-      </div>
+    <div class="overview-inner" id="overview-inner">
     </div>
     </div>
   </div>
@@ -694,116 +575,11 @@
   <!-- ══ WORKSPACE MODE ══ -->
   <div id="mode-workspace" class="mode-panel">
     <!-- Sidebar -->
-    <div class="ws-sidebar">
-      <div class="ws-sidebar-section">
-        <div class="ws-sidebar-label">Intelligence</div>
-        <div class="ws-nav-item active"><div class="ws-nav-dot"></div>Overview<span class="ws-nav-badge red">3</span></div>
-        <div class="ws-nav-item"><div class="ws-nav-dot"></div>Revenue<span class="ws-nav-badge" style="color:var(--green)">↑4.2%</span></div>
-        <div class="ws-nav-item"><div class="ws-nav-dot"></div>Clients<span class="ws-nav-badge red">2</span></div>
-        <div class="ws-nav-item"><div class="ws-nav-dot"></div>Pipeline<span class="ws-nav-badge yellow">$48k</span></div>
-        <div class="ws-nav-item"><div class="ws-nav-dot"></div>Team<span class="ws-nav-badge yellow">94%</span></div>
-        <div class="ws-nav-item"><div class="ws-nav-dot"></div>Signals</div>
-      </div>
-      <div class="ws-sidebar-tools">
-        <div class="ws-sidebar-label">Connected tools</div>
-        <div class="ws-tool-row"><div class="ws-tool-dot"></div><span style="font-size:11px;color:var(--text2)">HubSpot</span><span class="ws-tool-type">CRM</span></div>
-        <div class="ws-tool-row"><div class="ws-tool-dot"></div><span style="font-size:11px;color:var(--text2)">Stripe</span><span class="ws-tool-type">Billing</span></div>
-        <div class="ws-tool-row"><div class="ws-tool-dot"></div><span style="font-size:11px;color:var(--text2)">Notion</span><span class="ws-tool-type">Docs</span></div>
-        <div class="ws-tool-row"><div class="ws-tool-dot"></div><span style="font-size:11px;color:var(--text2)">Linear</span><span class="ws-tool-type">Projects</span></div>
-        <div class="ws-tool-row"><div class="ws-tool-dot"></div><span style="font-size:11px;color:var(--text2)">Slack</span><span class="ws-tool-type">Comms</span></div>
-        <div class="ws-tool-row"><div class="ws-tool-dot"></div><span style="font-size:11px;color:var(--text2)">Gmail</span><span class="ws-tool-type">Email</span></div>
-      </div>
-      <div style="margin-top:auto">
-        <div class="ws-health-bottom">
-          <div class="ws-health-label">Business health</div>
-          <div class="ws-health-score">72</div>
-          <div class="ws-health-sub">/ 100 · 3 risks flagged</div>
-          <div class="ws-health-bar"><div class="ws-health-fill"></div></div>
-        </div>
-        <div class="ws-user">
-          <div class="ws-user-av">KG</div>
-          <div><div class="ws-user-name">Krib Group</div><div class="ws-user-plan">Pro plan</div></div>
-        </div>
-      </div>
-    </div>
+    <div class="ws-sidebar" id="ws-sidebar"></div>
     <!-- Main -->
-    <div class="ws-main">
-      <div class="ws-main-header">
-        <div>
-          <div class="ws-main-title">Fieldwork Agency — Overview</div>
-          <div class="ws-main-sub">6 tools connected · Last synced 2h ago</div>
-        </div>
-        <div class="ws-main-live"><div class="ws-main-live-dot"></div>Live</div>
-      </div>
-      <div class="ws-content">
-        <!-- Metric strip -->
-        <div class="ws-card">
-          <div class="ws-metric-grid">
-            <div class="ws-metric-cell"><div class="ws-metric-label">MRR</div><div class="ws-metric-val">$112k</div><div class="ws-metric-trend" style="color:var(--green)">↑ 4.2%</div></div>
-            <div class="ws-metric-cell"><div class="ws-metric-label">Pipeline</div><div class="ws-metric-val">$48k</div><div class="ws-metric-trend" style="color:var(--yellow)">3 stalled</div></div>
-            <div class="ws-metric-cell"><div class="ws-metric-label">At-risk clients</div><div class="ws-metric-val" style="color:var(--red)">3</div><div class="ws-metric-trend" style="color:var(--red)">↑ from 1</div></div>
-            <div class="ws-metric-cell"><div class="ws-metric-label">Team util.</div><div class="ws-metric-val">94%</div><div class="ws-metric-trend" style="color:var(--yellow)">Near limit</div></div>
-          </div>
-        </div>
-        <!-- Clients -->
-        <div class="ws-card">
-          <div class="ws-card-header"><span class="ws-card-title">Client Health</span><span class="ws-card-action">View all →</span></div>
-          <div class="ws-card-body">
-            <div class="cl-row"><div class="cl-dot" style="background:var(--green)"></div><span class="cl-name">TechFlow Inc</span><span class="cl-mrr">$18,000</span><span class="cl-last">Active 2d ago</span><span class="cl-badge" style="background:rgba(34,197,94,0.08);color:var(--green)">Healthy</span></div>
-            <div class="cl-row"><div class="cl-dot" style="background:var(--green)"></div><span class="cl-name">Luna Brands</span><span class="cl-mrr">$12,000</span><span class="cl-last">Active today</span><span class="cl-badge" style="background:rgba(34,197,94,0.08);color:var(--green)">Healthy</span></div>
-            <div class="cl-row"><div class="cl-dot" style="background:var(--yellow)"></div><span class="cl-name">Veritas Co</span><span class="cl-mrr">$11,000</span><span class="cl-last">3 tickets open</span><span class="cl-badge" style="background:rgba(245,158,11,0.08);color:var(--yellow)">Watch</span></div>
-            <div class="cl-row"><div class="cl-dot" style="background:var(--red)"></div><span class="cl-name">Acme Corp</span><span class="cl-mrr">$14,000</span><span class="cl-last">18d silent</span><span class="cl-badge" style="background:rgba(239,68,68,0.08);color:var(--red)">At risk</span></div>
-            <div class="cl-row"><div class="cl-dot" style="background:var(--red)"></div><span class="cl-name">Bright Co</span><span class="cl-mrr">$8,000</span><span class="cl-last">Eng. ↓60%</span><span class="cl-badge" style="background:rgba(239,68,68,0.08);color:var(--red)">At risk</span></div>
-          </div>
-        </div>
-        <!-- Pipeline -->
-        <div class="ws-card">
-          <div class="ws-card-header"><span class="ws-card-title">Pipeline · $48,000</span><span class="ws-card-action">View all →</span></div>
-          <div class="ws-card-body">
-            <div class="pipe-head"><span>Deal</span><span style="text-align:right">Value</span><span style="text-align:right">Last contact</span><span style="text-align:right">Stage</span></div>
-            <div class="deal-row"><div><div class="deal-name">Meridian Group</div><div class="deal-co">Marketing</div></div><div class="deal-val">$18k</div><div class="deal-days" style="color:var(--yellow)">16 days ago</div><div class="deal-badge" style="background:rgba(245,158,11,0.08);color:var(--yellow)">Proposal</div></div>
-            <div class="deal-row"><div><div class="deal-name">Axle Studio</div><div class="deal-co">Design</div></div><div class="deal-val">$12k</div><div class="deal-days" style="color:var(--yellow)">No reply</div><div class="deal-badge" style="background:rgba(245,158,11,0.08);color:var(--yellow)">Proposal</div></div>
-            <div class="deal-row"><div><div class="deal-name">Forma Co</div><div class="deal-co">E-commerce</div></div><div class="deal-val">$22k</div><div class="deal-days" style="color:var(--red)">21 days ago</div><div class="deal-badge" style="background:rgba(239,68,68,0.08);color:var(--red)">Cold</div></div>
-          </div>
-        </div>
-        <!-- Team -->
-        <div class="ws-card">
-          <div class="ws-card-header"><span class="ws-card-title">Team Utilization</span><span class="ws-card-action">View all →</span></div>
-          <div class="ws-card-body">
-            <div class="tm-row"><div class="tm-av">JR</div><div class="tm-info"><div class="tm-name">James R.</div><div class="tm-role">Designer · 4 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:98%;background:var(--red)"></div></div><div class="tm-util" style="color:var(--red)">98%</div></div></div>
-            <div class="tm-row"><div class="tm-av">SK</div><div class="tm-info"><div class="tm-name">Sara K.</div><div class="tm-role">Copywriter · 3 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:88%;background:var(--yellow)"></div></div><div class="tm-util" style="color:var(--yellow)">88%</div></div></div>
-            <div class="tm-row"><div class="tm-av">MP</div><div class="tm-info"><div class="tm-name">Mike P.</div><div class="tm-role">Strategist · 2 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:72%;background:var(--border2)"></div></div><div class="tm-util">72%</div></div></div>
-            <div class="tm-row"><div class="tm-av">AL</div><div class="tm-info"><div class="tm-name">Amy L.</div><div class="tm-role">Account Mgr · 2 projects</div></div><div class="tm-right"><div class="tm-bar-w"><div class="tm-bar-f" style="width:65%;background:var(--border2)"></div></div><div class="tm-util">65%</div></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="ws-main" id="ws-main"></div>
     <!-- Right panel -->
-    <div class="ws-right">
-      <div class="ws-rp-section">
-        <div class="ws-rp-label">Snapshot</div>
-        <div class="ws-metric-row"><span class="ws-metric-name">MRR</span><div><span class="ws-metric-v">$112k</span><span class="ws-metric-u" style="color:var(--green)">↑4.2%</span></div></div>
-        <div class="ws-metric-row"><span class="ws-metric-name">Pipeline</span><span class="ws-metric-v">$48,000</span></div>
-        <div class="ws-metric-row"><span class="ws-metric-name">Overdue</span><div><span class="ws-metric-v" style="color:var(--red)">$14k</span><span class="ws-metric-u" style="color:var(--red)">risk</span></div></div>
-        <div class="ws-metric-row"><span class="ws-metric-name">Goal</span><span class="ws-metric-v">74%</span></div>
-      </div>
-      <div class="ws-rp-section">
-        <div class="ws-rp-label">Client health</div>
-        <div class="ws-cl-row"><div class="ws-cl-dot" style="background:var(--green)"></div><span class="ws-cl-name">TechFlow Inc</span><span class="ws-cl-val">$18k</span></div>
-        <div class="ws-cl-row"><div class="ws-cl-dot" style="background:var(--green)"></div><span class="ws-cl-name">Luna Brands</span><span class="ws-cl-val">$12k</span></div>
-        <div class="ws-cl-row"><div class="ws-cl-dot" style="background:var(--green)"></div><span class="ws-cl-name">Mosaic Studio</span><span class="ws-cl-val">$9k</span></div>
-        <div class="ws-cl-row"><div class="ws-cl-dot" style="background:var(--yellow)"></div><span class="ws-cl-name">Veritas Co</span><span class="ws-cl-val">$11k</span></div>
-        <div class="ws-cl-row"><div class="ws-cl-dot" style="background:var(--red)"></div><span class="ws-cl-name">Acme Corp</span><span class="ws-cl-val">$14k</span></div>
-        <div class="ws-cl-row"><div class="ws-cl-dot" style="background:var(--red)"></div><span class="ws-cl-name">Bright Co</span><span class="ws-cl-val">$8k</span></div>
-      </div>
-      <div class="ws-rp-section">
-        <div class="ws-rp-label">Recent activity</div>
-        <div class="ws-act-row"><div class="ws-act-dot" style="background:var(--red)"></div><div><div class="ws-act-text">Acme Corp invoice overdue</div><div class="ws-act-time">18d ago</div></div></div>
-        <div class="ws-act-row"><div class="ws-act-dot" style="background:var(--yellow)"></div><div><div class="ws-act-text">Veritas opened 3 tickets</div><div class="ws-act-time">2h ago</div></div></div>
-        <div class="ws-act-row"><div class="ws-act-dot" style="background:var(--green)"></div><div><div class="ws-act-text">Luna Brands renewed</div><div class="ws-act-time">Today</div></div></div>
-        <div class="ws-act-row"><div class="ws-act-dot" style="background:var(--border2)"></div><div><div class="ws-act-text">2 new deals added</div><div class="ws-act-time">Today</div></div></div>
-      </div>
-    </div>
+    <div class="ws-right" id="ws-right"></div>
   </div>
 
   <!-- ══ ASK MODE ══ -->
@@ -850,6 +626,35 @@ const companies = {
   fieldwork: {
     name: 'Fieldwork Agency',
     loadingSteps: ['Authenticating HubSpot...','Syncing Stripe data...','Reading Linear tasks...','Mapping client relationships...','Intelligence layer ready.'],
+    overview: {
+      eyebrow: 'Week 18 · Monday morning', greeting: "Good morning. Here's what's happening.",
+      healthScore: 72, healthStatus: '3 risks flagged',
+      healthBars: [{name:'Revenue',val:84,color:'var(--green)'},{name:'Clients',val:61,color:'var(--yellow)'},{name:'Pipeline',val:58,color:'var(--yellow)'},{name:'Team',val:48,color:'var(--red)'},{name:'Cash flow',val:78,color:'var(--green)'}],
+      alert: {title:'Acme Corp — invoice overdue · $14,000 · 18 days · no response', desc:'Three emails sent. No reply. This is your biggest at-risk account. A phone call today is non-negotiable.', cta:'Call now'},
+      revenue: {label:'Monthly Recurring Revenue', main:'$112,400', trend:'↑ 4.2%', sub:'vs $107,870 last month · 2 new retainers closed', sparkPath:'M0,50 C60,46 100,42 160,34 C220,26 280,18 340,10 C360,8 380,6 400,3',
+        cells:[{label:'New MRR',value:'$16,200',subColor:'var(--green)',sub:'↑ 2 new clients'},{label:'Churn risk',value:'$14,000',valColor:'var(--red)',subColor:'var(--red)',sub:'Acme Corp'},{label:'Pipeline',value:'$48,000',subColor:'var(--yellow)',sub:'3 stalled'},{label:'Goal',value:'74%',subColor:'var(--yellow)',sub:'$130k target'}]},
+      signals: [{label:'Active clients',value:'14',trend:'+2',color:'var(--green)'},{label:'At-risk clients',value:'3',trend:'↑',color:'var(--red)'},{label:'Projects behind',value:'2',trend:'',color:'var(--yellow)'},{label:'Team utilization',value:'94%',trend:'',color:'var(--yellow)'},{label:'Overdue invoices',value:'$14k',trend:'',color:'var(--red)'},{label:'Stalled deals',value:'3',trend:' $48k',color:'var(--yellow)'}],
+      clientsTitle: 'Client Health · 14 active',
+      clients: [{name:'TechFlow Inc',mrr:'$18,000',last:'Active 2d ago',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Luna Brands',mrr:'$12,000',last:'Active today',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Mosaic Studio',mrr:'$9,000',last:'Active 1d ago',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Veritas Co',mrr:'$11,000',last:'3 tickets open',badge:'Watch',color:'var(--yellow)',badgeBg:'rgba(245,158,11,0.08)'},{name:'Acme Corp',mrr:'$14,000',last:'18d silent',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'},{name:'Bright Co',mrr:'$8,000',last:'Eng. ↓60%',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'}],
+      pipelineTitle: 'Pipeline · $48,000',
+      deals: [{name:'Meridian Group',type:'Marketing',value:'$18k',days:'16 days ago',daysColor:'var(--yellow)',stage:'Proposal',stageBg:'rgba(245,158,11,0.08)',stageColor:'var(--yellow)'},{name:'Axle Studio',type:'Design',value:'$12k',days:'No reply',daysColor:'var(--yellow)',stage:'Proposal',stageBg:'rgba(245,158,11,0.08)',stageColor:'var(--yellow)'},{name:'Forma Co',type:'E-commerce',value:'$22k',days:'21 days ago',daysColor:'var(--red)',stage:'Cold',stageBg:'rgba(239,68,68,0.08)',stageColor:'var(--red)'},{name:'Bluewave Inc',type:'SaaS',value:'$9k',days:'Yesterday',daysColor:'var(--green)',stage:'Discovery',stageBg:'rgba(34,197,94,0.08)',stageColor:'var(--green)'}],
+      teamTitle: 'Team · Avg 94%',
+      team: [{initials:'JR',name:'James R.',role:'Designer · 4 projects',pct:98,color:'var(--red)'},{initials:'SK',name:'Sara K.',role:'Copywriter · 3 projects',pct:88,color:'var(--yellow)'},{initials:'MP',name:'Mike P.',role:'Strategist · 2 projects',pct:72,color:'var(--text3)'},{initials:'AL',name:'Amy L.',role:'Account Mgr · 2 projects',pct:65,color:'var(--text3)'}],
+      activity: [{text:'<strong>Acme Corp</strong> invoice overdue — no response to 3 emails',time:'18 days · $14,000',tool:'Stripe',color:'var(--red)'},{text:'<strong>Veritas Co</strong> submitted 3rd support ticket this week',time:'2 hours ago',tool:'Slack',color:'var(--yellow)'},{text:'<strong>Luna Brands</strong> renewed retainer — $12,000',time:'Today',tool:'Stripe',color:'var(--green)'},{text:'<strong>Bluewave Inc</strong> booked discovery call',time:'Today',tool:'HubSpot',color:'var(--green)'}],
+      signal: {date:'Monday, May 5 · Week 18', paras:["Revenue is <span class='g'>up 4.2%</span> — two new retainers closed. But <span class='r'>Acme Corp</span> hasn't responded in 18 days. That's your call today.","You have <strong>$48,000</strong> in pipeline going cold. Push this week."], focus:'Acme call today. Pipeline push by Thursday. Find who\'s overloaded.'},
+    },
+    workspace: {
+      navItems: [{label:'Overview',badge:'3',badgeClass:'red'},{label:'Revenue',badge:'↑4.2%'},{label:'Clients',badge:'2',badgeClass:'red'},{label:'Pipeline',badge:'$48k',badgeClass:'yellow'},{label:'Team',badge:'94%',badgeClass:'yellow'},{label:'Signals',badge:''}],
+      tools: [{name:'HubSpot',type:'CRM'},{name:'Stripe',type:'Billing'},{name:'Notion',type:'Docs'},{name:'Linear',type:'Projects'},{name:'Slack',type:'Comms'},{name:'Gmail',type:'Email'}],
+      userInitials:'KG', userName:'Krib Group',
+      metrics: [{label:'MRR',value:'$112k',valColor:'var(--text)',trend:'↑ 4.2%',trendColor:'var(--green)'},{label:'Pipeline',value:'$48k',trend:'3 stalled',trendColor:'var(--yellow)'},{label:'At-risk clients',value:'3',valColor:'var(--red)',trend:'↑ from 1',trendColor:'var(--red)'},{label:'Team util.',value:'94%',trend:'Near limit',trendColor:'var(--yellow)'}],
+      clientsTitle:'Client Health', pipelineTitle:'Pipeline · $48,000', teamTitle:'Team · Avg 94%',
+      clients: [{name:'TechFlow Inc',mrr:'$18k',last:'Active 2d ago',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Luna Brands',mrr:'$12k',last:'Active today',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Veritas Co',mrr:'$11k',last:'3 tickets open',badge:'Watch',color:'var(--yellow)',badgeBg:'rgba(245,158,11,0.08)'},{name:'Acme Corp',mrr:'$14k',last:'18d silent',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'},{name:'Bright Co',mrr:'$8k',last:'Eng. ↓60%',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'}],
+      deals: [{name:'Meridian Group',type:'Marketing',value:'$18k',days:'16 days ago',daysColor:'var(--yellow)',stage:'Proposal',stageBg:'rgba(245,158,11,0.08)',stageColor:'var(--yellow)'},{name:'Axle Studio',type:'Design',value:'$12k',days:'No reply',daysColor:'var(--yellow)',stage:'Proposal',stageBg:'rgba(245,158,11,0.08)',stageColor:'var(--yellow)'},{name:'Forma Co',type:'E-commerce',value:'$22k',days:'21 days ago',daysColor:'var(--red)',stage:'Cold',stageBg:'rgba(239,68,68,0.08)',stageColor:'var(--red)'}],
+      team: [{initials:'JR',name:'James R.',role:'Designer · 4 projects',pct:98,color:'var(--red)'},{initials:'SK',name:'Sara K.',role:'Copywriter · 3 projects',pct:88,color:'var(--yellow)'},{initials:'MP',name:'Mike P.',role:'Strategist · 2 projects',pct:72,color:'var(--text3)'},{initials:'AL',name:'Amy L.',role:'Account Mgr · 2 projects',pct:65,color:'var(--text3)'}],
+      snapshot: [{label:'MRR',value:'$112k',sub:'↑4.2%',subColor:'var(--green)'},{label:'Pipeline',value:'$48,000'},{label:'Overdue',value:'$14k',valColor:'var(--red)',sub:'risk',subColor:'var(--red)'},{label:'Goal',value:'74%'}],
+      activity: [{text:'Acme Corp invoice overdue',time:'18d ago',color:'var(--red)'},{text:'Veritas opened 3 tickets',time:'2h ago',color:'var(--yellow)'},{text:'Luna Brands renewed',time:'Today',color:'var(--green)'},{text:'2 new deals added',time:'Today',color:'var(--border2)'}],
+    },
     chips: [
       {label:'Which clients are at risk?',key:'clients'},
       {label:"What's our MRR trend?",key:'mrr'},
@@ -868,6 +673,35 @@ const companies = {
   northwave: {
     name: 'Northwave',
     loadingSteps: ['Authenticating Stripe...','Syncing subscriber data...','Reading Intercom tickets...','Mapping churn signals...','Intelligence layer ready.'],
+    overview: {
+      eyebrow: 'Week 18 · Monday morning', greeting: "Good morning. Here's the churn picture.",
+      healthScore: 64, healthStatus: '2 risks flagged',
+      healthBars: [{name:'Revenue',val:70,color:'var(--yellow)'},{name:'Subscribers',val:62,color:'var(--yellow)'},{name:'Pipeline',val:80,color:'var(--green)'},{name:'Support',val:48,color:'var(--red)'},{name:'Churn',val:52,color:'var(--red)'}],
+      alert: {title:'Churn up 2% — 18 subscribers lost this month', desc:'All churned from the starter plan after 6+ months. Your expansion motion is broken. No upgrade email is going out between months 3–6.', cta:'Fix it now'},
+      revenue: {label:'Monthly Recurring Revenue', main:'$84,200', trend:'↔ flat', sub:'New MRR almost entirely offset by churn · 3 enterprise deals in pipeline', sparkPath:'M0,30 C60,29 100,28 160,27 C220,26 280,25 340,24 C360,24 380,24 400,24',
+        cells:[{label:'New MRR',value:'$8,400',subColor:'var(--green)',sub:'↑ 12 signups'},{label:'Churned MRR',value:'$7,800',valColor:'var(--red)',subColor:'var(--red)',sub:'18 lost'},{label:'Net new',value:'$600',subColor:'var(--yellow)',sub:'Treadmill'},{label:'Enterprise pipe',value:'$86k ARR',subColor:'var(--green)',sub:'3 deals'}]},
+      signals: [{label:'MRR',value:'$84.2k',trend:' flat',color:'var(--yellow)'},{label:'Churn rate',value:'4.8%',trend:'↑2%',color:'var(--red)'},{label:'Open tickets',value:'8',trend:'↑',color:'var(--red)'},{label:'Enterprise deals',value:'3',trend:' $86k',color:'var(--green)'},{label:'Subscribers',value:'380',trend:'-18',color:'var(--yellow)'},{label:'NPS',value:'42',trend:'',color:'var(--yellow)'}],
+      clientsTitle: 'At-Risk Customers',
+      clients: [{name:'Forma Design',mrr:'$420/mo',last:'3 open tickets',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'},{name:'Stackd Co',mrr:'$420/mo',last:'18d no login',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'},{name:'Relay Studio',mrr:'$390/mo',last:'No upgrade',badge:'Watch',color:'var(--yellow)',badgeBg:'rgba(245,158,11,0.08)'},{name:'Bright Labs',mrr:'$510/mo',last:'Active daily',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Apex Co',mrr:'$720/mo',last:'Active 1d ago',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'}],
+      pipelineTitle: 'Enterprise Pipeline · $86k ARR',
+      deals: [{name:'Apex Ventures',type:'Enterprise',value:'$36k ARR',days:'Contract sent',daysColor:'var(--green)',stage:'Closing',stageBg:'rgba(34,197,94,0.08)',stageColor:'var(--green)'},{name:'Bluebird Labs',type:'Enterprise',value:'$28k ARR',days:'CFO sign-off',daysColor:'var(--yellow)',stage:'Final',stageBg:'rgba(245,158,11,0.08)',stageColor:'var(--yellow)'},{name:'Crestholm',type:'Enterprise',value:'$22k ARR',days:'Gone quiet',daysColor:'var(--red)',stage:'Stalled',stageBg:'rgba(239,68,68,0.08)',stageColor:'var(--red)'}],
+      teamTitle: 'Team · 22 people',
+      team: [{initials:'RK',name:'Riley K.',role:'Head of CS · 4 accounts',pct:95,color:'var(--red)'},{initials:'JM',name:'Jordan M.',role:'Sales · 3 deals',pct:82,color:'var(--yellow)'},{initials:'SL',name:'Sam L.',role:'Engineering · 6 tasks',pct:74,color:'var(--text3)'},{initials:'AC',name:'Alex C.',role:'Marketing · 2 campaigns',pct:60,color:'var(--text3)'}],
+      activity: [{text:'<strong>Stackd Co</strong> has not logged in for 18 days',time:'Alert · today',tool:'Intercom',color:'var(--red)'},{text:'<strong>8 support tickets</strong> overdue — avg 4 days old',time:'Intercom · today',tool:'Intercom',color:'var(--red)'},{text:'<strong>Apex Ventures</strong> contract sent — awaiting signature',time:'2h ago',tool:'HubSpot',color:'var(--green)'},{text:'<strong>18 starter subscribers</strong> churned this month',time:'Month to date',tool:'Stripe',color:'var(--yellow)'}],
+      signal: {date:'Monday, May 5 · Week 18', paras:["MRR is <span class='y'>flat at $84,200</span> — new revenue nearly cancelled out by churn. You're on a treadmill.","<span class='r'>Churn hit 4.8%</span> — all from starter plan users who never upgraded. There's no retention email between months 3–6. That's the fix."], focus:'Follow up with Crestholm today. Clear the 8 overdue tickets. Audit the starter upgrade flow.'},
+    },
+    workspace: {
+      navItems: [{label:'Overview',badge:'2',badgeClass:'red'},{label:'Churn',badge:'4.8%',badgeClass:'red'},{label:'Pipeline',badge:'$86k',badgeClass:''},{label:'Support',badge:'8',badgeClass:'red'},{label:'Revenue',badge:'flat',badgeClass:'yellow'},{label:'Signals',badge:''}],
+      tools: [{name:'Stripe',type:'Billing'},{name:'HubSpot',type:'CRM'},{name:'Linear',type:'Projects'},{name:'Slack',type:'Comms'},{name:'Intercom',type:'Support'},{name:'Notion',type:'Docs'}],
+      userInitials:'NW', userName:'Northwave',
+      metrics: [{label:'MRR',value:'$84.2k',trend:'flat',trendColor:'var(--yellow)'},{label:'Churn rate',value:'4.8%',valColor:'var(--red)',trend:'↑ from 2.8%',trendColor:'var(--red)'},{label:'Enterprise pipe',value:'$86k',trend:'3 deals',trendColor:'var(--green)'},{label:'Open tickets',value:'8',valColor:'var(--red)',trend:'All overdue',trendColor:'var(--red)'}],
+      clientsTitle:'At-Risk Customers', pipelineTitle:'Enterprise Pipeline · $86k', teamTitle:'Team · 22 people',
+      clients: [{name:'Forma Design',mrr:'$420/mo',last:'3 open tickets',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'},{name:'Stackd Co',mrr:'$420/mo',last:'18d no login',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'},{name:'Relay Studio',mrr:'$390/mo',last:'No upgrade',badge:'Watch',color:'var(--yellow)',badgeBg:'rgba(245,158,11,0.08)'},{name:'Bright Labs',mrr:'$510/mo',last:'Active daily',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Apex Co',mrr:'$720/mo',last:'Active 1d ago',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'}],
+      deals: [{name:'Apex Ventures',type:'Enterprise',value:'$36k ARR',days:'Contract sent',daysColor:'var(--green)',stage:'Closing',stageBg:'rgba(34,197,94,0.08)',stageColor:'var(--green)'},{name:'Bluebird Labs',type:'Enterprise',value:'$28k ARR',days:'CFO sign-off',daysColor:'var(--yellow)',stage:'Final',stageBg:'rgba(245,158,11,0.08)',stageColor:'var(--yellow)'},{name:'Crestholm',type:'Enterprise',value:'$22k ARR',days:'Gone quiet',daysColor:'var(--red)',stage:'Stalled',stageBg:'rgba(239,68,68,0.08)',stageColor:'var(--red)'}],
+      team: [{initials:'RK',name:'Riley K.',role:'Head of CS · 4 accounts',pct:95,color:'var(--red)'},{initials:'JM',name:'Jordan M.',role:'Sales · 3 deals',pct:82,color:'var(--yellow)'},{initials:'SL',name:'Sam L.',role:'Engineering · 6 tasks',pct:74,color:'var(--text3)'},{initials:'AC',name:'Alex C.',role:'Marketing · 2 campaigns',pct:60,color:'var(--text3)'}],
+      snapshot: [{label:'MRR',value:'$84.2k',sub:'flat',subColor:'var(--yellow)'},{label:'Churn',value:'4.8%',valColor:'var(--red)',sub:'↑2%',subColor:'var(--red)'},{label:'Pipeline',value:'$86k ARR'},{label:'Subscribers',value:'380',sub:'-18',subColor:'var(--red)'}],
+      activity: [{text:'Stackd Co — 18d no login',time:'Alert today',color:'var(--red)'},{text:'8 support tickets overdue',time:'Today',color:'var(--red)'},{text:'Apex Ventures contract sent',time:'2h ago',color:'var(--green)'},{text:'18 starters churned',time:'This month',color:'var(--yellow)'}],
+    },
     chips: [
       {label:"What's our churn situation?",key:'churn'},
       {label:'Which enterprise deals are closest?',key:'pipeline'},
@@ -886,6 +720,35 @@ const companies = {
   vantage: {
     name: 'Vantage Consulting',
     loadingSteps: ['Authenticating HubSpot...','Syncing Harvest timesheets...','Reading QuickBooks data...','Mapping engagement health...','Intelligence layer ready.'],
+    overview: {
+      eyebrow: 'Week 18 · Monday morning', greeting: "Good morning. One engagement needs your attention today.",
+      healthScore: 68, healthStatus: '2 risks flagged',
+      healthBars: [{name:'Revenue',val:78,color:'var(--green)'},{name:'Engagements',val:65,color:'var(--yellow)'},{name:'Pipeline',val:72,color:'var(--yellow)'},{name:'Team',val:58,color:'var(--yellow)'},{name:'Cash flow',val:82,color:'var(--green)'}],
+      alert: {title:'Meridian Partners — engagement ending in 6 weeks, no renewal conversation started', desc:'Last senior touchpoint was 3 weeks ago. This is a $28,000/month account. Call the decision maker today, not your usual contact.', cta:'Call now'},
+      revenue: {label:'Monthly Revenue', main:'$165,000', trend:'↔ stable', sub:'6 active engagements · 1 ending in 6 weeks · 2 proposals outstanding', sparkPath:'M0,20 C60,19 100,18 160,17 C220,16 280,15 340,14 C360,14 380,13 400,13',
+        cells:[{label:'Current monthly',value:'$165k',subColor:'var(--green)',sub:'6 engagements'},{label:'At risk',value:'$28k/mo',valColor:'var(--red)',subColor:'var(--red)',sub:'Meridian'},{label:'Proposals out',value:'$77k',subColor:'var(--yellow)',sub:'2 stale'},{label:'If both close',value:'$242k/mo',subColor:'var(--green)',sub:'Upside'}]},
+      signals: [{label:'Active engagements',value:'6',trend:'',color:'var(--green)'},{label:'Ending soon',value:'1',trend:' 6wk',color:'var(--red)'},{label:'Stale proposals',value:'2',trend:' $77k',color:'var(--yellow)'},{label:'Billable util.',value:'78%',trend:' vs 85% target',color:'var(--yellow)'},{label:'Overallocated',value:'1',trend:' Alex M.',color:'var(--red)'},{label:'NPS',value:'71',trend:'',color:'var(--green)'}],
+      clientsTitle: 'Engagement Health · 6 active',
+      clients: [{name:'Apex Fund',mrr:'$32k/mo',last:'Active',badge:'Strong',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Bluewave Cap',mrr:'$28k/mo',last:'Active',badge:'Strong',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Forma Group',mrr:'$24k/mo',last:'Scope creep',badge:'Watch',color:'var(--yellow)',badgeBg:'rgba(245,158,11,0.08)'},{name:'Meridian Partners',mrr:'$28k/mo',last:'3wk no touch',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'},{name:'Keller Co',mrr:'$22k/mo',last:'Active 1d',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Crest Holdings',mrr:'$31k/mo',last:'Active',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'}],
+      pipelineTitle: 'Stale Proposals · $77k',
+      deals: [{name:'Axle Ventures',type:'Strategy',value:'$45,000',days:'14 days ago',daysColor:'var(--yellow)',stage:'Proposal',stageBg:'rgba(245,158,11,0.08)',stageColor:'var(--yellow)'},{name:'Crestline Group',type:'Operations',value:'$32,000',days:'Went silent',daysColor:'var(--red)',stage:'Cold',stageBg:'rgba(239,68,68,0.08)',stageColor:'var(--red)'},{name:'Forge Capital',type:'Finance',value:'$18,000',days:'Yesterday',daysColor:'var(--green)',stage:'Discovery',stageBg:'rgba(34,197,94,0.08)',stageColor:'var(--green)'}],
+      teamTitle: 'Team Utilization · Avg 78%',
+      team: [{initials:'AM',name:'Alex M.',role:'Senior Consultant · 3 engagements',pct:112,color:'var(--red)'},{initials:'JL',name:'Jamie L.',role:'Analyst · 2 engagements',pct:85,color:'var(--green)'},{initials:'SR',name:'Sam R.',role:'Consultant · 2 engagements',pct:64,color:'var(--text3)'},{initials:'KP',name:'Kate P.',role:'Associate · 1 engagement',pct:55,color:'var(--text3)'}],
+      activity: [{text:'<strong>Meridian Partners</strong> — no senior contact in 21 days',time:'Alert · today',tool:'HubSpot',color:'var(--red)'},{text:'<strong>Axle Ventures</strong> proposal opened but no reply',time:'14 days ago',tool:'HubSpot',color:'var(--yellow)'},{text:'<strong>Apex Fund</strong> signed off on Q3 deliverables',time:'Yesterday',tool:'Notion',color:'var(--green)'},{text:'<strong>Alex M.</strong> flagged at 112% utilization',time:'This week',tool:'Harvest',color:'var(--red)'}],
+      signal: {date:'Monday, May 5 · Week 18', paras:["Revenue is stable at <strong>$165,000</strong> but <span class='r'>Meridian Partners ends in 6 weeks</span> — that's $28k/month with no renewal conversation started.","<span class='r'>Alex M. is at 112% billable utilization</span> across three engagements. Quality risk this week."], focus:'Call Meridian Partners decision maker today. Follow up on both proposals. Rebalance Alex M.\'s load.'},
+    },
+    workspace: {
+      navItems: [{label:'Overview',badge:'2',badgeClass:'red'},{label:'Engagements',badge:'1 risk',badgeClass:'red'},{label:'Pipeline',badge:'$77k',badgeClass:'yellow'},{label:'Team',badge:'78%',badgeClass:'yellow'},{label:'Revenue',badge:'$165k',badgeClass:''},{label:'Signals',badge:''}],
+      tools: [{name:'HubSpot',type:'CRM'},{name:'Harvest',type:'Time'},{name:'Notion',type:'Docs'},{name:'Slack',type:'Comms'},{name:'Gmail',type:'Email'},{name:'QuickBooks',type:'Finance'}],
+      userInitials:'VC', userName:'Vantage Consulting',
+      metrics: [{label:'Monthly revenue',value:'$165k',trend:'stable',trendColor:'var(--green)'},{label:'At-risk revenue',value:'$28k/mo',valColor:'var(--red)',trend:'Meridian ending',trendColor:'var(--red)'},{label:'Billable util.',value:'78%',trend:'vs 85% target',trendColor:'var(--yellow)'},{label:'Stale proposals',value:'2',trend:'$77k at risk',trendColor:'var(--yellow)'}],
+      clientsTitle:'Engagement Health', pipelineTitle:'Proposals · $77k', teamTitle:'Team Utilization · Avg 78%',
+      clients: [{name:'Apex Fund',mrr:'$32k',last:'Active',badge:'Strong',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Bluewave Cap',mrr:'$28k',last:'Active',badge:'Strong',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Forma Group',mrr:'$24k',last:'Scope creep',badge:'Watch',color:'var(--yellow)',badgeBg:'rgba(245,158,11,0.08)'},{name:'Meridian Partners',mrr:'$28k',last:'3wk no touch',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'},{name:'Keller Co',mrr:'$22k',last:'Active 1d',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'}],
+      deals: [{name:'Axle Ventures',type:'Strategy',value:'$45,000',days:'14 days ago',daysColor:'var(--yellow)',stage:'Proposal',stageBg:'rgba(245,158,11,0.08)',stageColor:'var(--yellow)'},{name:'Crestline Group',type:'Operations',value:'$32,000',days:'Went silent',daysColor:'var(--red)',stage:'Cold',stageBg:'rgba(239,68,68,0.08)',stageColor:'var(--red)'},{name:'Forge Capital',type:'Finance',value:'$18,000',days:'Yesterday',daysColor:'var(--green)',stage:'Discovery',stageBg:'rgba(34,197,94,0.08)',stageColor:'var(--green)'}],
+      team: [{initials:'AM',name:'Alex M.',role:'Senior Consultant · 3 engagements',pct:112,color:'var(--red)'},{initials:'JL',name:'Jamie L.',role:'Analyst · 2 engagements',pct:85,color:'var(--green)'},{initials:'SR',name:'Sam R.',role:'Consultant · 2 engagements',pct:64,color:'var(--text3)'},{initials:'KP',name:'Kate P.',role:'Associate · 1 engagement',pct:55,color:'var(--text3)'}],
+      snapshot: [{label:'Monthly rev',value:'$165k'},{label:'At risk',value:'$28k/mo',valColor:'var(--red)',sub:'Meridian',subColor:'var(--red)'},{label:'Billable util',value:'78%',sub:'↓ target',subColor:'var(--yellow)'},{label:'Proposals',value:'$77k',sub:'2 stale',subColor:'var(--yellow)'}],
+      activity: [{text:'Meridian Partners — no touch 21d',time:'Alert today',color:'var(--red)'},{text:'Axle Ventures proposal stale',time:'14d ago',color:'var(--yellow)'},{text:'Apex Fund Q3 signed off',time:'Yesterday',color:'var(--green)'},{text:'Alex M. at 112% utilization',time:'This week',color:'var(--red)'}],
+    },
     chips: [
       {label:'Which engagement is most at risk?',key:'engagements'},
       {label:"What's our pipeline looking like?",key:'pipeline'},
@@ -904,6 +767,35 @@ const companies = {
   folio: {
     name: 'Folio',
     loadingSteps: ['Authenticating Shopify...','Syncing Triple Whale data...','Reading Klaviyo flows...','Mapping subscription health...','Intelligence layer ready.'],
+    overview: {
+      eyebrow: 'Week 18 · Monday morning', greeting: "Good morning. Two things need your attention today.",
+      healthScore: 61, healthStatus: '3 risks flagged',
+      healthBars: [{name:'Revenue',val:72,color:'var(--yellow)'},{name:'ROAS',val:38,color:'var(--red)'},{name:'Subscriptions',val:55,color:'var(--red)'},{name:'Inventory',val:42,color:'var(--red)'},{name:'Customer sat.',val:78,color:'var(--green)'}],
+      alert: {title:'Clarity Serum — 12 days of inventory left · lead time is 21 days', desc:'You are already past the point of avoiding a stockout. Place the reorder today. Every day you wait extends the out-of-stock window on your best-selling SKU.', cta:'Reorder now'},
+      revenue: {label:'Monthly Revenue', main:'$310,000', trend:'↓ 6%', sub:'Ad ROAS down 18% · subscription churn up 2.1% · one-time orders holding', sparkPath:'M0,10 C60,12 100,16 160,22 C220,28 280,34 340,40 C360,42 380,45 400,48',
+        cells:[{label:'Total revenue',value:'$310k',subColor:'var(--yellow)',sub:'↓6% MoM'},{label:'Subscription',value:'$84k',subColor:'var(--red)',sub:'Churn ↑2.1%'},{label:'One-time',value:'$226k',subColor:'var(--yellow)',sub:'ROAS ↓18%'},{label:'Best SKU stock',value:'12 days',valColor:'var(--red)',subColor:'var(--red)',sub:'Order TODAY'}]},
+      signals: [{label:'ROAS (Meta)',value:'1.8x',trend:'↓18%',color:'var(--red)'},{label:'Sub. churn',value:'6.2%',trend:'↑2.1%',color:'var(--red)'},{label:'Clarity Serum stock',value:'12d',trend:' ⚠',color:'var(--red)'},{label:'Total revenue',value:'$310k',trend:'↓6%',color:'var(--yellow)'},{label:'Subscribers',value:'1,240',trend:'-76',color:'var(--yellow)'},{label:'Avg order value',value:'$61',trend:'+$3',color:'var(--green)'}],
+      clientsTitle: 'Subscription Health',
+      clients: [{name:'Bundle subscribers',mrr:'$3.8k MRR',last:'Churn 1.8%',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Multi-product',mrr:'$2.1k MRR',last:'Churn 3.2%',badge:'Watch',color:'var(--yellow)',badgeBg:'rgba(245,158,11,0.08)'},{name:'Single-product',mrr:'$1.4k MRR',last:'Churn 5.4%',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'},{name:'Day 45–60 cohort',mrr:'Cancels here',last:'No ret. email',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'}],
+      pipelineTitle: 'Inventory Status',
+      deals: [{name:'Clarity Serum',type:'Best seller',value:'12 days left',days:'Reorder NOW',daysColor:'var(--red)',stage:'Critical',stageBg:'rgba(239,68,68,0.08)',stageColor:'var(--red)'},{name:'Vitamin C Serum',type:'Mid tier',value:'24 days left',days:'Monitor',daysColor:'var(--yellow)',stage:'Watch',stageBg:'rgba(245,158,11,0.08)',stageColor:'var(--yellow)'},{name:'Glow Moisturizer',type:'Staple',value:'38 days left',days:'OK',daysColor:'var(--green)',stage:'Good',stageBg:'rgba(34,197,94,0.08)',stageColor:'var(--green)'}],
+      teamTitle: 'Team · 7 people',
+      team: [{initials:'LP',name:'Lena P.',role:'Head of Growth · Meta ads',pct:98,color:'var(--red)'},{initials:'MR',name:'Marco R.',role:'Ops · inventory + fulfillment',pct:90,color:'var(--yellow)'},{initials:'JK',name:'Jana K.',role:'Email · Klaviyo flows',pct:72,color:'var(--text3)'},{initials:'DC',name:'Dan C.',role:'CS · subscriber support',pct:65,color:'var(--text3)'}],
+      activity: [{text:'<strong>Clarity Serum</strong> inventory alert — 12 days remaining',time:'Alert · today',tool:'Shopify',color:'var(--red)'},{text:'<strong>Meta ROAS</strong> dropped to 1.8x — new UGC ads underperforming',time:'This week',tool:'Triple Whale',color:'var(--red)'},{text:'<strong>76 subscribers</strong> cancelled this month — days 45–60 cohort',time:'Month to date',tool:'Recharge',color:'var(--yellow)'},{text:'<strong>Glow Moisturizer</strong> AOV up $3 after bundle test',time:'Yesterday',tool:'Shopify',color:'var(--green)'}],
+      signal: {date:'Monday, May 5 · Week 18', paras:["Two things today. Reorder <span class='r'>Clarity Serum immediately</span> — 12 days left, 21-day lead time. You're already late.","<span class='r'>Meta ROAS is at 1.8x</span> — your best old testimonial ad is still in the library. Reactivate it. The new UGC batch isn't working."], focus:'Reorder Clarity Serum now. Reactivate top testimonial ad. Add day-40 retention email for single subscribers.'},
+    },
+    workspace: {
+      navItems: [{label:'Overview',badge:'3',badgeClass:'red'},{label:'ROAS',badge:'1.8x',badgeClass:'red'},{label:'Inventory',badge:'⚠',badgeClass:'red'},{label:'Subscriptions',badge:'6.2%',badgeClass:'red'},{label:'Revenue',badge:'$310k',badgeClass:''},{label:'Signals',badge:''}],
+      tools: [{name:'Shopify',type:'Store'},{name:'Klaviyo',type:'Email'},{name:'Gorgias',type:'Support'},{name:'Triple Whale',type:'Analytics'},{name:'Recharge',type:'Subscriptions'},{name:'Slack',type:'Comms'}],
+      userInitials:'FL', userName:'Folio',
+      metrics: [{label:'Monthly revenue',value:'$310k',trend:'↓ 6% MoM',trendColor:'var(--yellow)'},{label:'Meta ROAS',value:'1.8x',valColor:'var(--red)',trend:'↓18% — act now',trendColor:'var(--red)'},{label:'Sub. churn',value:'6.2%',valColor:'var(--red)',trend:'↑ from 4.1%',trendColor:'var(--red)'},{label:'Clarity Serum stock',value:'12 days',valColor:'var(--red)',trend:'Order today',trendColor:'var(--red)'}],
+      clientsTitle:'Subscription Segments', pipelineTitle:'Inventory Status', teamTitle:'Team · 7 people',
+      clients: [{name:'Bundle subscribers',mrr:'Churn 1.8%',last:'Healthy',badge:'Healthy',color:'var(--green)',badgeBg:'rgba(34,197,94,0.08)'},{name:'Multi-product',mrr:'Churn 3.2%',last:'Watch',badge:'Watch',color:'var(--yellow)',badgeBg:'rgba(245,158,11,0.08)'},{name:'Single-product',mrr:'Churn 5.4%',last:'No ret. email',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'},{name:'Day 45–60 cohort',mrr:'High cancel',last:'No retention',badge:'At risk',color:'var(--red)',badgeBg:'rgba(239,68,68,0.08)'}],
+      deals: [{name:'Clarity Serum',type:'Best seller',value:'12 days left',days:'Reorder NOW',daysColor:'var(--red)',stage:'Critical',stageBg:'rgba(239,68,68,0.08)',stageColor:'var(--red)'},{name:'Vitamin C Serum',type:'Mid tier',value:'24 days left',days:'Monitor',daysColor:'var(--yellow)',stage:'Watch',stageBg:'rgba(245,158,11,0.08)',stageColor:'var(--yellow)'},{name:'Glow Moisturizer',type:'Staple',value:'38 days left',days:'OK',daysColor:'var(--green)',stage:'Good',stageBg:'rgba(34,197,94,0.08)',stageColor:'var(--green)'}],
+      team: [{initials:'LP',name:'Lena P.',role:'Head of Growth · Meta ads',pct:98,color:'var(--red)'},{initials:'MR',name:'Marco R.',role:'Ops · inventory + fulfillment',pct:90,color:'var(--yellow)'},{initials:'JK',name:'Jana K.',role:'Email · Klaviyo flows',pct:72,color:'var(--text3)'},{initials:'DC',name:'Dan C.',role:'CS · subscriber support',pct:65,color:'var(--text3)'}],
+      snapshot: [{label:'Revenue',value:'$310k',sub:'↓6%',subColor:'var(--yellow)'},{label:'ROAS',value:'1.8x',valColor:'var(--red)',sub:'↓18%',subColor:'var(--red)'},{label:'Sub. churn',value:'6.2%',valColor:'var(--red)',sub:'↑2.1%',subColor:'var(--red)'},{label:'Clarity stock',value:'12 days',valColor:'var(--red)',sub:'⚠ critical',subColor:'var(--red)'}],
+      activity: [{text:'Clarity Serum — 12d inventory left',time:'Alert today',color:'var(--red)'},{text:'ROAS dropped to 1.8x',time:'This week',color:'var(--red)'},{text:'76 subscribers cancelled',time:'This month',color:'var(--yellow)'},{text:'Bundle AOV up $3',time:'Yesterday',color:'var(--green)'}],
+    },
     chips: [
       {label:"What's happening with our ROAS?",key:'roas'},
       {label:'How is subscription health?',key:'subscriptions'},
@@ -986,8 +878,262 @@ function launchApp(co) {
   document.getElementById('term-empty-sub').textContent = `Ask anything about ${co.name}.`;
   populateChips(co);
   resetAskState();
+  renderOverview(co);
+  renderWorkspace(co);
   switchMode('overview');
   showScreen('app-screen');
+}
+
+// ═══════════════════════════════
+// OVERVIEW RENDERER
+// ═══════════════════════════════
+function renderOverview(co) {
+  const d = co.overview;
+  const healthColor = d.healthScore >= 80 ? 'var(--green)' : d.healthScore >= 60 ? 'var(--yellow)' : 'var(--red)';
+  const dashOffset = Math.round(107 - (d.healthScore / 100) * 107);
+
+  const signalRows = d.signals.map(s => `
+    <div class="sig-item">
+      <div class="sig-dot" style="background:${s.color}"></div>
+      <span class="sig-label">${s.label}</span>
+      <span class="sig-val">${s.value}<span class="sig-trend" style="color:${s.color}"> ${s.trend}</span></span>
+    </div>`).join('');
+
+  const clientRows = d.clients.map(c => `
+    <div class="cl-row">
+      <div class="cl-dot" style="background:${c.color}"></div>
+      <span class="cl-name">${c.name}</span>
+      <span class="cl-mrr">${c.mrr}</span>
+      <span class="cl-last">${c.last}</span>
+      <span class="cl-badge" style="background:${c.badgeBg};color:${c.color}">${c.badge}</span>
+    </div>`).join('');
+
+  const dealRows = d.deals.map(dl => `
+    <div class="deal-row">
+      <div><div class="deal-name">${dl.name}</div><div class="deal-co">${dl.type}</div></div>
+      <div class="deal-val">${dl.value}</div>
+      <div class="deal-days" style="color:${dl.daysColor}">${dl.days}</div>
+      <div class="deal-badge" style="background:${dl.stageBg};color:${dl.stageColor}">${dl.stage}</div>
+    </div>`).join('');
+
+  const teamRows = d.team.map(t => `
+    <div class="tm-row">
+      <div class="tm-av">${t.initials}</div>
+      <div class="tm-info"><div class="tm-name">${t.name}</div><div class="tm-role">${t.role}</div></div>
+      <div class="tm-right">
+        <div class="tm-bar-w"><div class="tm-bar-f" style="width:${t.pct}%;background:${t.color}"></div></div>
+        <div class="tm-util" style="color:${t.color}">${t.pct}%</div>
+      </div>
+    </div>`).join('');
+
+  const actRows = d.activity.map(a => `
+    <div class="act-item">
+      <div class="act-left"><div class="act-dot" style="background:${a.color}"></div><div class="act-line"></div></div>
+      <div><div class="act-text">${a.text}</div><div class="act-time">${a.time} <span class="act-tool">${a.tool}</span></div></div>
+    </div>`).join('');
+
+  document.getElementById('overview-inner').innerHTML = `
+    <div class="ov-header">
+      <div class="ov-header-left">
+        <div class="ov-eyebrow">${d.eyebrow}</div>
+        <div class="ov-title">${d.greeting}</div>
+      </div>
+      <div class="ov-health">
+        <div class="health-ring-wrap">
+          <svg viewBox="0 0 40 40"><circle class="hring-bg" cx="20" cy="20" r="17"/><circle class="hring-fill" cx="20" cy="20" r="17" style="stroke:${healthColor};stroke-dashoffset:${dashOffset}"/></svg>
+          <div class="hring-num">${d.healthScore}</div>
+        </div>
+        <div><div class="ov-health-text-label">Business health</div><div class="ov-health-text-status" style="color:${healthColor}">${d.healthStatus}</div></div>
+      </div>
+    </div>
+    <div class="newspaper">
+      <div class="card card-alert-banner">
+        <div class="alert-dot"></div>
+        <div class="alert-text-w">
+          <div class="alert-ttl"><span class="r">${d.alert.title}</span></div>
+          <div class="alert-dsc">${d.alert.desc}</div>
+        </div>
+        <div class="alert-acts"><button class="alert-btn-p">${d.alert.cta}</button><button class="alert-btn-s">Snooze</button></div>
+      </div>
+      <div class="card card-revenue">
+        <div class="card-header"><span class="card-title">${d.revenue.label}</span><span class="card-action">6 months →</span></div>
+        <div class="card-body">
+          <div class="rev-main"><span class="rev-num">${d.revenue.main}</span><span class="rev-trend">${d.revenue.trend}</span></div>
+          <div class="rev-sub">${d.revenue.sub}</div>
+          <svg class="spark-svg" viewBox="0 0 400 56" fill="none" preserveAspectRatio="none"><path d="${d.revenue.sparkPath}" stroke="var(--green)" stroke-width="1.5" fill="none" stroke-linecap="round"/><circle cx="400" cy="3" r="3" fill="var(--green)"/></svg>
+          <div class="spark-labels"><span class="spark-lbl">Nov</span><span class="spark-lbl">Dec</span><span class="spark-lbl">Jan</span><span class="spark-lbl">Feb</span><span class="spark-lbl">Mar</span><span class="spark-lbl">Apr</span></div>
+          <div class="rev-grid">${d.revenue.cells.map(c=>`<div class="rev-cell"><div class="rev-cell-lbl">${c.label}</div><div class="rev-cell-val" style="color:${c.valColor||'var(--text)'}">${c.value}</div><div class="rev-cell-sub" style="color:${c.subColor||'var(--text3)'}">${c.sub}</div></div>`).join('')}</div>
+        </div>
+      </div>
+      <div class="card card-health-b">
+        <div class="card-header"><span class="card-title">Health Breakdown</span></div>
+        <div class="card-body">
+          <div class="hbig" style="color:${healthColor}">${d.healthScore}</div>
+          <div class="hbig-sub">out of 100 · ${d.healthStatus}</div>
+          ${d.healthBars.map(b=>`<div class="hbar"><div class="hbar-top"><span class="hbar-name">${b.name}</span><span class="hbar-val" style="color:${b.color}">${b.val}</span></div><div class="hbar-track"><div class="hbar-fill" style="width:${b.val}%;background:${b.color}"></div></div></div>`).join('')}
+        </div>
+      </div>
+      <div class="card card-signals">
+        <div class="card-header"><span class="card-title">Key Signals</span><span class="card-meta">Live</span></div>
+        <div class="card-body">${signalRows}</div>
+      </div>
+      <div class="card card-clients">
+        <div class="card-header"><span class="card-title">${d.clientsTitle}</span><span class="card-action">View all →</span></div>
+        <div class="card-body">${clientRows}</div>
+      </div>
+      <div class="card card-pipeline">
+        <div class="card-header"><span class="card-title">${d.pipelineTitle}</span><span class="card-action">View all →</span></div>
+        <div class="card-body">
+          <div class="pipe-head"><span>Deal</span><span style="text-align:right">Value</span><span style="text-align:right">Last contact</span><span style="text-align:right">Stage</span></div>
+          ${dealRows}
+        </div>
+      </div>
+      <div class="card card-team">
+        <div class="card-header"><span class="card-title">${d.teamTitle}</span><span class="card-action">View all →</span></div>
+        <div class="card-body">${teamRows}</div>
+      </div>
+      <div class="card card-activity">
+        <div class="card-header"><span class="card-title">Activity Feed</span><span class="card-meta">Live</span></div>
+        <div class="card-body">${actRows}</div>
+      </div>
+      <div class="card card-wsig">
+        <div class="card-header"><span class="card-title">Weekly Signal</span><span class="card-action">Archive →</span></div>
+        <div class="card-body">
+          <div class="wsig-date">${d.signal.date}</div>
+          ${d.signal.paras.map(p=>`<p class="wsig-para">${p}</p>`).join('')}
+          <div class="wsig-action"><strong>Focus:</strong> ${d.signal.focus}</div>
+          <div class="wsig-more">Read full briefing <span>→</span></div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ═══════════════════════════════
+// WORKSPACE RENDERER
+// ═══════════════════════════════
+function renderWorkspace(co) {
+  const d = co.workspace;
+  const healthColor = co.overview.healthScore >= 80 ? 'var(--green)' : co.overview.healthScore >= 60 ? 'var(--yellow)' : 'var(--red)';
+
+  // Sidebar
+  const navItems = d.navItems.map((n,i) => `
+    <div class="ws-nav-item${i===0?' active':''}">
+      <div class="ws-nav-dot"></div>${n.label}
+      <span class="ws-nav-badge${n.badgeClass?' '+n.badgeClass:''}">${n.badge}</span>
+    </div>`).join('');
+
+  const toolRows = d.tools.map(t => `
+    <div class="ws-tool-row"><div class="ws-tool-dot"></div>
+      <span style="font-size:11px;color:var(--text2)">${t.name}</span>
+      <span class="ws-tool-type">${t.type}</span>
+    </div>`).join('');
+
+  document.getElementById('ws-sidebar').innerHTML = `
+    <div class="ws-sidebar-section">
+      <div class="ws-sidebar-label">Intelligence</div>${navItems}
+    </div>
+    <div class="ws-sidebar-tools">
+      <div class="ws-sidebar-label">Connected tools</div>${toolRows}
+    </div>
+    <div style="margin-top:auto">
+      <div class="ws-health-bottom">
+        <div class="ws-health-label">Business health</div>
+        <div class="ws-health-score">${co.overview.healthScore}</div>
+        <div class="ws-health-sub">/ 100 · ${co.overview.healthStatus}</div>
+        <div class="ws-health-bar"><div class="ws-health-fill" style="width:${co.overview.healthScore}%;background:${healthColor}"></div></div>
+      </div>
+      <div class="ws-user">
+        <div class="ws-user-av">${d.userInitials}</div>
+        <div><div class="ws-user-name">${d.userName}</div><div class="ws-user-plan">Pro plan</div></div>
+      </div>
+    </div>`;
+
+  // Main
+  const metricCells = d.metrics.map(m => `
+    <div class="ws-metric-cell">
+      <div class="ws-metric-label">${m.label}</div>
+      <div class="ws-metric-val" style="color:${m.valColor||'var(--text)'}">${m.value}</div>
+      <div class="ws-metric-trend" style="color:${m.trendColor||'var(--text3)'}">${m.trend}</div>
+    </div>`).join('');
+
+  const wsClientRows = d.clients.map(c => `
+    <div class="cl-row">
+      <div class="cl-dot" style="background:${c.color}"></div>
+      <span class="cl-name">${c.name}</span>
+      <span class="cl-mrr">${c.mrr}</span>
+      <span class="cl-last">${c.last}</span>
+      <span class="cl-badge" style="background:${c.badgeBg};color:${c.color}">${c.badge}</span>
+    </div>`).join('');
+
+  const wsDealRows = d.deals.map(dl => `
+    <div class="deal-row">
+      <div><div class="deal-name">${dl.name}</div><div class="deal-co">${dl.type}</div></div>
+      <div class="deal-val">${dl.value}</div>
+      <div class="deal-days" style="color:${dl.daysColor}">${dl.days}</div>
+      <div class="deal-badge" style="background:${dl.stageBg};color:${dl.stageColor}">${dl.stage}</div>
+    </div>`).join('');
+
+  const wsTeamRows = d.team.map(t => `
+    <div class="tm-row">
+      <div class="tm-av">${t.initials}</div>
+      <div class="tm-info"><div class="tm-name">${t.name}</div><div class="tm-role">${t.role}</div></div>
+      <div class="tm-right">
+        <div class="tm-bar-w"><div class="tm-bar-f" style="width:${t.pct}%;background:${t.color}"></div></div>
+        <div class="tm-util" style="color:${t.color}">${t.pct}%</div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('ws-main').innerHTML = `
+    <div class="ws-main-header">
+      <div>
+        <div class="ws-main-title">${co.name} — Overview</div>
+        <div class="ws-main-sub">${d.tools.length} tools connected · Last synced 2h ago</div>
+      </div>
+      <div class="ws-main-live"><div class="ws-main-live-dot"></div>Live</div>
+    </div>
+    <div class="ws-content">
+      <div class="ws-card"><div class="ws-metric-grid">${metricCells}</div></div>
+      <div class="ws-card">
+        <div class="ws-card-header"><span class="ws-card-title">${d.clientsTitle}</span><span class="ws-card-action">View all →</span></div>
+        <div class="ws-card-body">${wsClientRows}</div>
+      </div>
+      <div class="ws-card">
+        <div class="ws-card-header"><span class="ws-card-title">${d.pipelineTitle}</span><span class="ws-card-action">View all →</span></div>
+        <div class="ws-card-body">
+          <div class="pipe-head"><span>Deal</span><span style="text-align:right">Value</span><span style="text-align:right">Last contact</span><span style="text-align:right">Stage</span></div>
+          ${wsDealRows}
+        </div>
+      </div>
+      <div class="ws-card">
+        <div class="ws-card-header"><span class="ws-card-title">${d.teamTitle}</span><span class="ws-card-action">View all →</span></div>
+        <div class="ws-card-body">${wsTeamRows}</div>
+      </div>
+    </div>`;
+
+  // Right panel
+  const rpSnapshotRows = d.snapshot.map(s => `
+    <div class="ws-metric-row">
+      <span class="ws-metric-name">${s.label}</span>
+      <div><span class="ws-metric-v" style="color:${s.valColor||'var(--text)'}">${s.value}</span>${s.sub?`<span class="ws-metric-u" style="color:${s.subColor||'var(--text3)'}">${s.sub}</span>`:''}</div>
+    </div>`).join('');
+
+  const rpClientRows = d.clients.slice(0,6).map(c => `
+    <div class="ws-cl-row">
+      <div class="ws-cl-dot" style="background:${c.color}"></div>
+      <span class="ws-cl-name">${c.name}</span>
+      <span class="ws-cl-val">${c.mrr}</span>
+    </div>`).join('');
+
+  const rpActivityRows = d.activity.map(a => `
+    <div class="ws-act-row">
+      <div class="ws-act-dot" style="background:${a.color}"></div>
+      <div><div class="ws-act-text">${a.text}</div><div class="ws-act-time">${a.time}</div></div>
+    </div>`).join('');
+
+  document.getElementById('ws-right').innerHTML = `
+    <div class="ws-rp-section"><div class="ws-rp-label">Snapshot</div>${rpSnapshotRows}</div>
+    <div class="ws-rp-section"><div class="ws-rp-label">${d.clientsTitle}</div>${rpClientRows}</div>
+    <div class="ws-rp-section"><div class="ws-rp-label">Recent activity</div>${rpActivityRows}</div>`;
 }
 
 function goBack() {
